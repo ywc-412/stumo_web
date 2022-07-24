@@ -59,25 +59,10 @@
                 style="cursor: pointer"
                 @click="$router.push('/')"
             >
-              <v-icon color="primary" large>mdi-feather</v-icon>
-              Hero
-              <span class="accent--text">UI</span>
+              Stumo
             </v-toolbar-title>
           </v-col>
 
-          <v-col v-if="$vuetify.breakpoint.mdAndUp" cols="6">
-            <v-btn
-                v-for="(item, i) in barItems"
-                :key="i"
-                :to="item.to"
-                class="text-capitalize"
-                exact
-                exact-active-class="accent--text"
-                text
-            >{{ item.title }}
-            </v-btn
-            >
-          </v-col>
 
           <v-col v-if="$vuetify.breakpoint.mdAndUp" class="text-right">
             <v-btn
@@ -94,6 +79,7 @@
               {{ item.text }}
             </v-btn>
           </v-col>
+
         </v-row>
       </v-container>
     </v-app-bar>
@@ -106,35 +92,20 @@ export default {
     drawer: null,
     btnItems: [
       {
-        text: "Free Download",
+        text: "새로운 모임 시작하기",
         href: "https://github.com/AGDholo/giraffe",
         target: "_black",
         color: "primary",
-        icon: "mdi-download",
-      },
-    ],
-    barItems: [
-      {
-        title: "Home",
-        to: "/",
+        icon: "mdi-grease-pencil",
       },
       {
-        title: "Category",
-        to: "/category",
+        text: "로그인",
+        href: "https://github.com/AGDholo/giraffe",
+        target: "_black",
+        color: "primary",
+        icon: "mdi-login",
       },
-      {
-        title: "Detail",
-        to: "/detail",
-      },
-      {
-        title: "Authors",
-        to: "/authors",
-      },
-      {
-        title: "Login",
-        to: "/login",
-      },
-    ],
+    ]
   }),
 };
 </script>

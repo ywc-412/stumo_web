@@ -6,7 +6,6 @@
       <router-view></router-view>
     </v-container>
 
-    <Footer></Footer>
   </v-app>
 </template>
 
@@ -16,8 +15,20 @@ export default {
 
   components: {
     AppBar: () => import("@/components/layout/appbar.vue"),
-    Footer: () => import("@/components/layout/footer.vue"),
   },
-  data: () => ({}),
+  data: () => ({
+  }),
 };
 </script>
+<style>
+  .v-application {
+    font-family: 'Cafe24Font', sans-serif !important;
+  }
+
+  @font-face {
+    font-family:'Cafe24Font';
+    src: url('fonts/Cafe24Ssurround.ttf') format('truetype');
+    font-weight: 400;
+  }
+
+</style>
