@@ -69,7 +69,6 @@
                 v-for="(item, i) in btnItems"
                 :key="i"
                 :color="item.color"
-                :href="item.href"
                 :outlined="item.outlined"
                 :target="item.target"
                 :to="item.to"
@@ -93,14 +92,14 @@ export default {
     btnItems: [
       {
         text: "새로운 모임 시작하기",
-        href: "https://github.com/AGDholo/giraffe",
+        to: "https://github.com/AGDholo/giraffe",
         target: "_black",
         color: "primary",
         icon: "mdi-grease-pencil",
       },
       {
         text: "로그인",
-        href: "https://github.com/AGDholo/giraffe",
+        to: "/login",
         target: "_black",
         color: "primary",
         icon: "mdi-login",

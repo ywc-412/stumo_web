@@ -8,7 +8,8 @@
             <v-row>
               <v-col v-for="i in 6" :key="i" cols="12" lg="4" md="6">
                 <v-hover v-slot:default="{ hover }" close-delay="50" open-delay="50">
-                  <div>
+                  <div
+                        class="card_border">
                     <v-card
                         :color="hover ? 'white' : 'transparent'"
                         :elevation="hover ? 12 : 0"
@@ -82,3 +83,10 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+  .card_border{
+    border: 2px solid #e7e5e5;
+    border-radius: 20px;
+  }
+</style>

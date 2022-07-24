@@ -11,6 +11,16 @@ const routes = [
         component: Home
     },
     {
+        path: '/login',
+        name: 'Login',
+        component: () => import("@/views/Login.vue"),
+    },
+    {
+        path: '/moView',
+        name: 'MoView',
+        component: () => import("@/views/MoView.vue"),
+    },
+    {
         path: '/category',
         name: 'Category',
         component: () => import("@/views/Category.vue"),
@@ -29,6 +39,7 @@ const routes = [
 
 const router = new VueRouter({
     routes,
+    mode: "history",
     scrollBehavior() {
         document.getElementById('app').scrollIntoView();
     }
