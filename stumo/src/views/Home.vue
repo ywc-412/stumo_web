@@ -67,8 +67,6 @@
 </template>
 
 <script>
-import Dialog from 'vuetify-dialog'
-
 export default {
 
   name: "Home",

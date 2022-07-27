@@ -38,14 +38,9 @@
                 </div>
 
                 <v-divider class="my-4"></v-divider>
-
                 <div>
-                  <p class="text-subtitle-1 primary--text font-weight-medium">
-                    우리 이번에 이런 프로젝트 하기로 했는데 지원하실 분..;
-                    구해욘?
-                  </p>
+                  <toast-editor/>
                 </div>
-
                 <v-divider class="my-8"></v-divider>
 
               </v-card-text>
@@ -64,10 +59,13 @@
 </template>
 
 <script>
+import ToastEditor from '../components/toast/ToastEditor.vue';
+
 export default {
-  name: "Category",
   components: {
+    ToastEditor,
     siderbar: () => import("@/components/details/sidebar")
-  }
+  },
+  
 };
 </script>
