@@ -39,10 +39,8 @@
 
                 <v-divider class="my-4"></v-divider>
                 <div>
-                  <toast-editor/>
+                  <toast-editor class="toast_index"/>
                 </div>
-                <v-divider class="my-8"></v-divider>
-
               </v-card-text>
             </v-card>
           </div>
