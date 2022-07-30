@@ -15,7 +15,7 @@
                         :elevation="hover ? 12 : 0"
                         flat
                         hover
-                        to="/detail"
+                        to="/moView"
                     >
                       <div class="d-flex align-center">
                         <v-card-text>

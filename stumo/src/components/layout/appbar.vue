@@ -92,7 +92,7 @@ export default {
     btnItems: [
       {
         text: "새로운 모임 시작하기",
-        to: "/moView",
+        to: "/moRegi",
         target: "_black",
         color: "primary",
         icon: "mdi-grease-pencil",

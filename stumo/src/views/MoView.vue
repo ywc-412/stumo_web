@@ -39,8 +39,9 @@
 
                 <v-divider class="my-4"></v-divider>
                 <div>
-                  <toast-editor class="toast_index"/>
+                  <toast-viewer class="toast_index"/>
                 </div>
+
               </v-card-text>
             </v-card>
           </div>
@@ -57,13 +58,17 @@
 </template>
 
 <script>
-import ToastEditor from '../components/toast/ToastEditor.vue';
+import ToastViewer from '../components/toast/ToastViewer.vue';
 
 export default {
   components: {
-    ToastEditor,
+    ToastViewer,
     siderbar: () => import("@/components/details/sidebar")
   },
+  data(){
+    return{
+    }
+  }
   
 };
 </script>

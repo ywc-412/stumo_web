@@ -1,11 +1,12 @@
 <template>
   <div>
-    <editor :initialValue="editorText"
+    <editor ref="toastEditor"
+            :initialValue="editorText"
             :html="editorHtml"
             :visible="editorVisible"
             :options="editorOptions"
             previewStyle="vertical"
-            height="500px"
+            height="600px"
             initialEditType="wysiwyg" 
             class="toast_index"
             />
@@ -17,8 +18,14 @@ import "@toast-ui/editor/dist/toastui-editor.css";
 import { Editor } from "@toast-ui/vue-editor";
 
 export default {
+  props: ["childValue"],
   components: {
-    'editor': Editor
+    'editor': Editor,
+  },
+  methods: {
+    setContent(content){
+      this.$refs.toastEditor.invoke('setHTML', content);
+    }
   },
   data(){
     return{
@@ -27,9 +34,13 @@ export default {
           hideModeSwitch: true,
       },
       editorHtml: '',
-      editorVisible: true
+      editorVisible: true,
+      viewerText: '# This is Viewer.\n Hello World.',
     }
-  }
+  },
+  mounted(){
+    this.setContent("<p>MountViewer Content</p>");
+  },
 };
 </script>
 

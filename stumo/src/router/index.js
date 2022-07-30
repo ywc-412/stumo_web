@@ -21,6 +21,11 @@ const routes = [
         component: () => import("@/views/MoView.vue"),
     },
     {
+        path: '/moRegi',
+        name: 'MoRegi',
+        component: () => import("@/views/moRegi.vue"),
+    },
+    {
         path: '/category',
         name: 'Category',
         component: () => import("@/views/Category.vue"),
@@ -29,7 +34,7 @@ const routes = [
         path: '/authors',
         name: 'Authors',
         component: () => import("@/views/Authors.vue"),
-    }
+    },
 ]
 
 const router = new VueRouter({
