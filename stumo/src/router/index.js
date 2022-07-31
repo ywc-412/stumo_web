@@ -16,6 +16,11 @@ const routes = [
         component: () => import("@/views/Login.vue"),
     },
     {
+        path: '/myPage',
+        name: 'MyPage',
+        component: () => import("@/views/MyPage.vue"),
+    },
+    {
         path: '/moView',
         name: 'MoView',
         component: () => import("@/views/MoView.vue"),
@@ -23,7 +28,12 @@ const routes = [
     {
         path: '/moRegi',
         name: 'MoRegi',
-        component: () => import("@/views/moRegi.vue"),
+        component: () => import("@/views/MoRegi.vue"),
+    },
+    {
+        path: '/moAppl',
+        name: 'MoAppl',
+        component: () => import("@/views/MoAppl.vue"),
     },
     {
         path: '/category',

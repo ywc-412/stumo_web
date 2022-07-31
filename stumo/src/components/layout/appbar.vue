@@ -104,6 +104,13 @@ export default {
         color: "primary",
         icon: "mdi-login",
       },
+      {
+        text: "마이페이지",
+        to: "/myPage",
+        target: "_black",
+        color: "primary",
+        icon: "mdi-account",
+      },
     ]
   }),
 };

@@ -10,7 +10,7 @@
       </div>
 
       <div class="pt-4 pb-5">
-        <h3 class="text-h5 font-weight-medium pb-4">Comments</h3>
+        <h3 class="text-h5 font-weight-medium pb-4">댓글</h3>
 
         <v-divider></v-divider>
 

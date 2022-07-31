@@ -4,9 +4,6 @@
 
 declare module 'vue' {
   export interface GlobalComponents {
-    Appbar: typeof import('./src/components/layout/appbar.vue')['default']
-    Footer: typeof import('./src/components/layout/footer.vue')['default']
-    Sidebar: typeof import('./src/components/details/sidebar.vue')['default']
     VApp: typeof import('vuetify/lib')['VApp']
     VAppBar: typeof import('vuetify/lib')['VAppBar']
     VAppBarNavIcon: typeof import('vuetify/lib')['VAppBarNavIcon']
