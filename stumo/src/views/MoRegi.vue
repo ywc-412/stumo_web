@@ -17,7 +17,7 @@
 
               <!-- 시작일, 종료일 START -->
               <div class="d-flex align-center">
-                <h3 class="text-h7 font-weight-medium pb-2 pr-8" style="color:black;">시작일</h3>
+                <h3 class="text-h7 font-weight-medium pr-8" style="color:black;">시작일</h3>
                 <v-menu
                         ref="menu1"
                         v-model="menu1"
@@ -74,6 +74,8 @@
 
               <!-- 시작일, 종료일 END -->
 
+
+
               <!-- 모집인원 START -->
               <div class="d-flex align-center">
                 <h3 class="text-h7 font-weight-medium pr-5" style="color:black;">모집인원</h3>
@@ -92,12 +94,60 @@
                 </v-text-field>
               </div>
               <!-- 모집인원 END -->
+
+              <!-- 모집게시일 -->
+              <div class="d-flex align-center">
+                <h3 class="text-h7 font-weight-medium pr-8" style="color:black;">모집 게시일</h3>
+                <v-menu
+                        ref="menu3"
+                        v-model="menu3"
+                        :close-on-content-click="false"
+                        :return-value.sync="s_date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field v-model="ms_date"
+                                  prepend-icon="mdi-calendar"
+                                  readonly
+                                  v-bind="attrs"
+                                  v-on="on"
+                                  class="mr-7"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker v-model="ms_date" no-title scrollable>
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="menu3 = false">Cancel</v-btn>
+                    <v-btn text color="primary" @click="s_date_search(ms_date)">OK</v-btn>
+                  </v-date-picker>
+                </v-menu>
+                <h4 class="text-h7 font-weight-medium" style="color:red;">* 모집 게시일 오후 12시에 게시됩니다. (당일 모집은 즉시 게시)</h4>
+              </div>
+              <!-- 모집게시일 -->
+
+
+              <!-- 모집인원 START -->
+              <div class="d-flex align-center">
+                <h3 class="text-h7 font-weight-medium pr-5" style="color:black;">해시태그</h3>
+                <v-col v-for="i in 6" :key="i" >
+                  <v-text-field class="pr-2" 
+                                placeholder="해시태그">
+                  </v-text-field>
+                </v-col>
+                <h4 class="text-h7 font-weight-medium" style="color:red;">* # 은 빼고 입력해주세요.</h4>
+              </div>
+              <!-- 모집인원 END -->
+
             </div>
 
             <!-- 분리선 -->
             <v-divider class="my-4"></v-divider>
             <div class="pt-4 pb-4">
               <h2 class="text-h7 font-weight-medium pb-7" style="color:black;">모집 내용</h2>
+              <div class="pb-2">
+                <h5 class="text-h7 font-weight-medium" style="color:red;">* 지원자에게 혼선을 주지 않기 위해 모임 장소(위치) 및 온/오프라인 여부를 꼭 적어주세요.</h5>
+              </div>
               <toast-editor class="toast_index"/>
             </div>
 
@@ -122,8 +172,10 @@ export default {
           date: new Date().toISOString().substr(0, 10),
           s_date: new Date().toISOString().substr(0, 10),
           e_date: new Date().toISOString().substr(0, 10),
+          ms_date: new Date().toISOString().substr(0, 10),
           menu1: false,
-          menu2: false
+          menu2: false,
+          menu3: false
         }
     },
     setup() {},

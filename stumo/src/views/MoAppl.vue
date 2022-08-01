@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pb-16">
     <v-row>
       <v-col cols="12" lg="12" xl="8">
         <v-card flat color="transparent">
@@ -20,6 +20,7 @@
             <div class="pt-4">
               <h2 class="text-h7 font-weight-medium" style="color:black;">연락수단</h2>
               <h4 class="text-h7 font-weight-medium pb-1" style="color:red;">* 모임 리더가 연락할 수 있도록 연락처를 기입해주세요!</h4>
+              <h4 class="text-h7 font-weight-medium pb-1" style="color:red;">* 합류가 확정되면 모임 리더에게 연락처가 제공됩니다.</h4>
             
               <!-- 모집인원 START -->
               <div class="d-flex align-center">
@@ -40,7 +41,7 @@
                     <v-checkbox></v-checkbox>[필수] 개인정보 수집, 제3자 제공 및 이용 동의
                 </div>
                 <h5>
-                    1. 목적 : 지원자 개인 식별, 지원의사 확인, 입사전형의 진행, 지원이력 확인 및 모집자에게 정보 제공
+                    1. 목적 : 지원자 개인 식별, 지원의사 확인, 지원이력 확인 및 모집자에게 정보 제공
                 </h5>
                 <h5>
                     2. 항목 : 아이디(이메일주소), 카카오톡 아이디
@@ -63,7 +64,7 @@
               <toast-editor class="toast_index"/>
             </div>
 
-            <v-btn color="accent" block large>모집 시작!</v-btn>
+            <v-btn color="accent" block large>지원하기!</v-btn>
           </v-card-text>
         </v-card>
       </v-col>

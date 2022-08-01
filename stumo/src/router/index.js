@@ -36,6 +36,21 @@ const routes = [
         component: () => import("@/views/MoAppl.vue"),
     },
     {
+        path: '/myAppl',
+        name: 'MyAppl',
+        component: () => import("@/views/MyAppl.vue"),
+    },
+    {
+        path: '/applList',
+        name: 'ApplList',
+        component: () => import("@/views/ApplList.vue"),
+    },
+    {
+        path: '/applConfirm',
+        name: 'ApplConfirm',
+        component: () => import("@/views/ApplConfirm.vue"),
+    },
+    {
         path: '/category',
         name: 'Category',
         component: () => import("@/views/Category.vue"),

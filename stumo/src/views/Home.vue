@@ -4,7 +4,20 @@
       <v-col cols="12" lg="12" xl="8">
         <div>
           <div class="pt-16">
-            <h2 class="text-h5 font-weight-bold pb-4">지원을 기다리는 글</h2>
+
+            <!-- 검색창 -->
+
+            <div class="d-flex align-center pb-10">
+              <h3 class="text-h7 font-weight-medium pr-5" style="color:black;">검색</h3>
+              <v-text-field class="pr-6" 
+                            placeholder="해시태그 or 제목">
+              </v-text-field>
+              <v-btn color="accent" >모임 찾기!</v-btn>
+            </div>
+
+            <!-- 검색창 -->
+
+            <h2 class="text-h7 font-weight-medium pr-5 pb-4" style="color:black;">지원을 기다리는 글</h2>
             <v-row>
               <v-col v-for="i in 6" :key="i" cols="12" lg="4" md="6">
                 <v-hover v-slot:default="{ hover }" close-delay="50" open-delay="50">
@@ -51,8 +64,17 @@
                         </div>
 
                         <div class="d-flex align-center">
-                          <div class="pl-2">Yan Lee · 22 July 2019</div>
+                          <div class="pl-2">둔이둔이 · 2022년 12월 25일</div>
                         </div>
+
+                        <div class="pt-4 pb-5">
+                          <v-row class="pt-4">
+                            <v-col v-for="i in 2" :key="i" class="flex-shrink-0" cols="auto">
+                              <v-chip color="accent">#Javascript</v-chip>
+                            </v-col>
+                          </v-row>
+                        </div>
+
                       </v-card-text>
                     </v-card>
                   </div>

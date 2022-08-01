@@ -33,7 +33,13 @@
                       <v-chip small color="transparent">
                         <v-icon left>mdi-email-fast-outline</v-icon>5/100
                       </v-chip>
-                      <v-btn color="accent" medium to="/moAppl">지원하기!</v-btn>
+
+                      <v-chip small color="transparent">
+                        <v-btn color="accent" medium to="/moAppl">지원하기!</v-btn>
+                      </v-chip>
+                      <v-chip small color="transparent">
+                        <v-btn color="accent" medium to="/applList">지원자 확인!</v-btn>
+                      </v-chip>
                     </div>
                   </div>
                 </div>
