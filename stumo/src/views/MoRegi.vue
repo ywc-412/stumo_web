@@ -81,7 +81,7 @@
                 <h3 class="text-h7 font-weight-medium pr-5" style="color:black;">모집인원</h3>
                 <v-text-field 
                               class="pr-6" 
-                              placeholder="모집 인원 수" 
+                              placeholder="지원자들에게 모집 인원 수를 알려주세요!" 
                               type="number" 
                               oninput="javascript: this.value = this.value.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g, '' );">
                 </v-text-field>
@@ -126,6 +126,36 @@
               </div>
               <!-- 모집게시일 -->
 
+              <!-- 모집종료일 -->
+              <div class="d-flex align-center">
+                <h3 class="text-h7 font-weight-medium pr-8" style="color:black;">모집 종료일</h3>
+                <v-menu
+                        ref="menu4"
+                        v-model="menu4"
+                        :close-on-content-click="false"
+                        :return-value.sync="s_date"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field v-model="me_date"
+                                  prepend-icon="mdi-calendar"
+                                  readonly
+                                  v-bind="attrs"
+                                  v-on="on"
+                                  class="mr-7"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker v-model="me_date" no-title scrollable>
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="menu4 = false">Cancel</v-btn>
+                    <v-btn text color="primary" @click="s_date_search(me_date)">OK</v-btn>
+                  </v-date-picker>
+                </v-menu>
+                <h4 class="text-h7 font-weight-medium" style="color:red;">* 모집 종료일 오후 12시에 모집 종료됩니다. (종료일 이후 지원 받을 수 없어요!)</h4>
+              </div>
+              <!-- 모집게시일 -->
 
               <!-- 모집인원 START -->
               <div class="d-flex align-center">
@@ -173,9 +203,11 @@ export default {
           s_date: new Date().toISOString().substr(0, 10),
           e_date: new Date().toISOString().substr(0, 10),
           ms_date: new Date().toISOString().substr(0, 10),
+          me_date: new Date().toISOString().substr(0, 10),
           menu1: false,
           menu2: false,
-          menu3: false
+          menu3: false,
+          menu4: false
         }
     },
     setup() {},

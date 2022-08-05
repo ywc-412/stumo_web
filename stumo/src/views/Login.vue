@@ -11,8 +11,10 @@
             <div class="d-flex justify-center">
                 <v-row>
                     <v-col v-for="loginImg in loginImgList" :key="loginImg" cols="12" lg="6" md="6">
-                        <div>
-                            <img :src=loginImg.src alt="">
+                        <div >
+                            <a :href="kakaoLoginLink" target="_blank">
+                              <img style="cursor: pointer" :src=loginImg.src alt="">
+                            </a>
                         </div>
                     </v-col>
                 </v-row>
@@ -30,17 +32,14 @@
             return {
                 loginImgList: [
                     {src: '/assets/img/kakao_login.png'}
-                    ,{src: '/assets/img/google_login.png'}
-                ]
+                ],
+                kakaoLoginLink: "https://kauth.kakao.com/oauth/authorize?client_id=a8fcd8f59fa1106468fd27d99a1865ea&redirect_uri=http://localhost:8080/login/kakao&response_type=code"
             }
         },
-        setup() {},
-        created() {},
-        mounted() {
-
-        },
-        unmonunted() {},
-        methods: {}
+        // methods start
+        methods: {
+        }
+        // methods end
     }
 </script>
 <style coped>
