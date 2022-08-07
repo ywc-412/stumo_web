@@ -96,11 +96,29 @@ export default {
     siderbar: () => import("@/components/details/sidebar"),
   },
   mounted (){
+    this.getLoginInfo();
+  },
+  methods: {
+    getLoginInfo(){
+      this.$axios.get("/login/info", {
+                                        'Access-Control-Allow-Origin' : '*',
+                                        'Content-Type' : 'application/json; charset = utf-8' 
+                                      })
+                  .then((res) => {
+                    console.log(res.data);
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  })
+                  .finally(()=>{
+                    console.log("finally");
+                  })
+    }
   },
   data(){
     return{
     }
-  }
+  },
 };
 </script>
 
