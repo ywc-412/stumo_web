@@ -12,7 +12,7 @@
                 <v-row>
                     <v-col v-for="loginImg in loginImgList" :key="loginImg" cols="12" lg="6" md="6">
                         <div >
-                            <a :href="kakaoLoginLink" target="_blank">
+                            <a :href="kakaoLoginLink" >
                               <img style="cursor: pointer" :src=loginImg.src alt="">
                             </a>
                         </div>
