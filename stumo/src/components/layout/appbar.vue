@@ -63,7 +63,6 @@
             </v-toolbar-title>
           </v-col>
 
-
           <v-col v-if="$vuetify.breakpoint.mdAndUp" class="text-right">
             <v-btn
                 v-for="(item, i) in btnItems"
@@ -87,9 +86,32 @@
 
 <script>
 export default {
+  mounted (){
+    this.getLoginInfo();
+  },
+  methods: {
+    getLoginInfo(){
+      this.$axios.get("/login/info")
+                  .then((res) => {
+                    if (res.data == ""){
+                      this.btnItems = [...this.defaultBtnItems];
+                    } else {
+                      this.btnItems = [...this.loginedBtnItems];
+                    }
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  })
+                  .finally(()=>{
+                    console.log("finally");
+                  })
+    }
+  },
   data: () => ({
     drawer: null,
     btnItems: [
+    ],
+    defaultBtnItems: [
       {
         text: "새로운 모임 시작하기",
         to: "/moRegi",
@@ -104,6 +126,15 @@ export default {
         color: "primary",
         icon: "mdi-login",
       },
+    ],
+    loginedBtnItems: [
+      {
+        text: "새로운 모임 시작하기",
+        to: "/moRegi",
+        target: "_black",
+        color: "primary",
+        icon: "mdi-grease-pencil",
+      },
       {
         text: "마이페이지",
         to: "/myPage",
@@ -111,7 +142,7 @@ export default {
         color: "primary",
         icon: "mdi-account",
       },
-    ]
+    ],
   }),
 };
 </script>
