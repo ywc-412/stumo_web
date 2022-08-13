@@ -93,15 +93,8 @@ export default {
     getLoginInfo(){
       this.$axios.get("/login/info")
                   .then((res) => {
-                    //https://github.com/euvl/vue-notification
                     this.$notify({title: "최영우님!",text: "환영합니다! "});
 
-                    // this.$notify({
-                    //   group: 'noti',
-                    //   title: 'Alert',
-                    //   text: 'Hello user! This is a Noti'
-                    // })
-                    
                     if (res.data == ""){
                       this.btnItems = [...this.defaultBtnItems];
                     } else {
