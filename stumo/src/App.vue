@@ -6,6 +6,7 @@
       <router-view></router-view>
     </v-container>
 
+    <notifications position="bottom left" width="100%"/>
   </v-app>
 </template>
 
@@ -30,5 +31,4 @@ export default {
     src: url('fonts/Cafe24Ssurround.ttf') format('truetype');
     font-weight: 400;
   }
-
 </style>

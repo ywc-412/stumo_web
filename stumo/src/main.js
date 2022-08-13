@@ -2,19 +2,14 @@ import Vue from 'vue'
 import App from './App.vue'
 import vuetify from './plugins/vuetify';
 import router from './router'
-import axios from 'axios'
+import axios from './assets/js/axios'
+import Notifications from 'vue-notification'
 
 Vue.config.productionTip = false
-Vue.prototype.$axios = axios
+Vue.prototype.axios = axios
+//Vue.prototype.dialog = VuetifyDialog;
 
-axios.defaults.baseURL = '/api'
-axios.defaults.headers.common.Accept = 'application/json'
-axios.interceptors.response.use(
-  response => response,
-  (error) => {
-    return Promise.reject(error)
-  }
-)
+Vue.use(Notifications);
 
 new Vue({
   vuetify,
