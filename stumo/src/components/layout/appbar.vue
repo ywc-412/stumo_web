@@ -91,7 +91,7 @@ export default {
   },
   methods: {
     getLoginInfo(){
-      this.axios.get("/login/info")
+      this.$axios.get("/login/info")
                   .then((res) => {
                     //https://github.com/euvl/vue-notification
                     this.$notify({title: "최영우님!",text: "환영합니다! "});

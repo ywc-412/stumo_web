@@ -6,7 +6,7 @@ import axios from './assets/js/axios'
 import Notifications from 'vue-notification'
 
 Vue.config.productionTip = false
-Vue.prototype.axios = axios
+Vue.prototype.$axios = axios
 //Vue.prototype.dialog = VuetifyDialog;
 
 Vue.use(Notifications);
