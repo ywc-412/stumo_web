@@ -42,8 +42,8 @@
         // methods end
     }
 </script>
-<style coped>
+<style scoped>
     .login_text{
         margin-bottom: 1.5em;
     }
-</style>>
+</style>
