@@ -21,6 +21,16 @@ const routes = [
         component: () => import("@/views/MyPage.vue"),
     },
     {
+        path: '/myChat',
+        name: 'MyChat',
+        component: () => import("@/views/Chat/MyChat.vue"),
+    },
+    {
+        path: '/chat',
+        name: 'Chat',
+        component: () => import("@/views/Chat/Chat.vue"),
+    },
+    {
         path: '/moView',
         name: 'MoView',
         component: () => import("@/views/MoView.vue"),

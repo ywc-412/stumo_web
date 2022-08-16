@@ -144,6 +144,13 @@ export default {
         color: "primary",
         icon: "mdi-account",
       },
+      {
+        text: "채팅룸",
+        to: "/myChat",
+        target: "_black",
+        color: "primary",
+        icon: "mdi-account",
+      },
     ],
   }),
 };
