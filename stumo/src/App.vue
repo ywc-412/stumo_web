@@ -7,15 +7,18 @@
     </v-container>
 
     <notifications position="bottom left" width="100%"/>
+    <confirm />
   </v-app>
 </template>
 
 <script>
+
 export default {
   name: "App",
 
   components: {
     AppBar: () => import("@/components/layout/appbar.vue"),
+    Confirm: () => import("@/views/Alert/Confirm.vue"),
   },
   data: () => ({
   }),

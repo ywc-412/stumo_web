@@ -60,16 +60,6 @@ const routes = [
         name: 'ApplConfirm',
         component: () => import("@/views/ApplConfirm.vue"),
     },
-    {
-        path: '/category',
-        name: 'Category',
-        component: () => import("@/views/Category.vue"),
-    },
-    {
-        path: '/authors',
-        name: 'Authors',
-        component: () => import("@/views/Authors.vue"),
-    },
 ]
 
 const router = new VueRouter({
