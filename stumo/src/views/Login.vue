@@ -33,7 +33,7 @@
                 loginImgList: [
                     {src: '/assets/img/kakao_login.png'}
                 ],
-                kakaoLoginLink: "https://kauth.kakao.com/oauth/authorize?client_id=a8fcd8f59fa1106468fd27d99a1865ea&redirect_uri=http://localhost:8080/api/login/kakao&response_type=code"
+                kakaoLoginLink: "https://kauth.kakao.com/oauth/authorize?client_id=a8fcd8f59fa1106468fd27d99a1865ea&redirect_uri=http://localhost:8080/login/kakao&response_type=code"
             }
         },
         // methods start

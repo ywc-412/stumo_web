@@ -13,9 +13,6 @@ export default () => {
         base: "./",
         server: {
             host: HOST,
-            proxy: {
-                "/api": "http://localhost:8080"
-            }
         },
         resolve: {
             extensions: ['.vue', '.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
