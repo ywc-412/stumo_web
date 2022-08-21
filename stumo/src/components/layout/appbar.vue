@@ -94,7 +94,6 @@ export default {
       this.$axios.get("/login/info")
                   .then((res) => {
                     this.$notify({title: "최영우님!",text: "환영합니다! "});
-
                     if (res.data == ""){
                       this.btnItems = [...this.defaultBtnItems];
                     } else {
