@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-axios.defaults.baseURL = "http://52.206.29.77:8080/api";
+axios.defaults.baseURL = "https://stumoapi.com/api";
 axios.defaults.withCredentials = true;
 
 axios.interceptors.request.use(
