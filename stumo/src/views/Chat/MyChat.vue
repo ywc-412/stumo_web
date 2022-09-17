@@ -59,9 +59,23 @@ export default {
     closeChatStatus(status){
       this.chatStatus = status;
     },
+    getMyChatRoom(){
+      this.$axios.get("/chat")
+                  .then((res) => {
+                    
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  })
+                  .finally(()=>{
+                    //console.log("finally Test");
+                  });
+    }
   },
   mounted (){
     this.chatStatus = false;
+
+    this.getMyChatRoom();
   },
   data(){
     return{
