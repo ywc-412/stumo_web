@@ -18,8 +18,9 @@
                             @click="openChat(chat.chatId)">
                       <v-card-text>
                         
+                        <!-- meeting content -->
                         <div class="text-h6 font-weight-bold primary--text">
-                          사이드 프로젝트 하실 분 구해요! ㅎㅎㅎ
+                          {{chat.content}}
                         </div>
 
                       </v-card-text>
@@ -48,7 +49,6 @@
 import Chat from './Chat.vue';
 
 export default {
-
   name: "Home",
   components: {
   },
@@ -62,7 +62,8 @@ export default {
     getMyChatRoom(){
       this.$axios.get("/chat")
                   .then((res) => {
-                    
+                    console.log("chatroom api start");
+                    this.chatList = res.data;
                   })
                   .catch((error) => {
                     console.log(error);
@@ -74,19 +75,12 @@ export default {
   },
   mounted (){
     this.chatStatus = false;
-
     this.getMyChatRoom();
   },
   data(){
     return{
         chatStatus: null,
         chatList:[
-          {
-            chatId: 1,
-          },
-          {
-            chatId: 2,
-          }
         ],
     }
   },
