@@ -62,7 +62,6 @@ export default {
     getMyChatRoom(){
       this.$axios.get("/chat")
                   .then((res) => {
-                    console.log("chatroom api start");
                     this.chatList = res.data;
                   })
                   .catch((error) => {
