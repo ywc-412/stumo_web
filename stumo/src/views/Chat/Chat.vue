@@ -76,19 +76,10 @@
         this.$emit("closeChatStatus", this.dialog);
       },
       sendMessage(){
-        this.$axios.get("/chat/message")
-                    .then((res) => {
-                      this.chatList = res.data;
-                    })
-                    .catch((error) => {
-                      console.log(error);
-                    })
-                    .finally(()=>{
-                      //console.log("finally Test");
-                    });
+        this.stompClient.send("/app/hello", {}, {message : "hi"});
       },
       connect(){
-          const serverURL = "http://localhost:8080/api/chat";
+          const serverURL = "http://localhost:8080/websockethandler";
           let socket = new SockJS(serverURL);
           this.stompClient = Stomp.over(socket);
 
@@ -100,7 +91,7 @@
               this.connected = true;
               console.log("소켓 연결 성공 " + frame);
 
-              this.stompClient.subscribe("/api/chat/send", res=>{
+              this.stompClient.subscribe("/topic/roomId", res=>{
                 alert(1);
                 console.log("구독으로 받은 메시지 입니다.", res.body);
                 
