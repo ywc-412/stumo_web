@@ -76,14 +76,17 @@
         this.$emit("closeChatStatus", this.dialog);
       },
       sendMessage(){
-        this.stompClient.send("/app/hello", {}, {message : "hi"});
+        let data = {"message" : "hi", "username": "choi"};
+        console.log("send message");
+        console.log(JSON.stringify(data))
+        // this.stompClient.send("/pub/chat/message", {}, JSON.stringify(data));
+
+        this.stompClient.send("/pub/chat/message", JSON.stringify(data), {});
       },
       connect(){
-          const serverURL = "http://localhost:8080/websockethandler";
+          const serverURL = "http://localhost:8080/chatting";
           let socket = new SockJS(serverURL);
           this.stompClient = Stomp.over(socket);
-
-          console.log("소켓 연결을 시도.. 서버 주소는 " + serverURL);
 
           this.stompClient.connect(
             {},
@@ -91,7 +94,7 @@
               this.connected = true;
               console.log("소켓 연결 성공 " + frame);
 
-              this.stompClient.subscribe("/topic/roomId", res=>{
+              this.stompClient.subscribe("/sub/topic/roomId/topicExample", res=>{
                 alert(1);
                 console.log("구독으로 받은 메시지 입니다.", res.body);
                 
