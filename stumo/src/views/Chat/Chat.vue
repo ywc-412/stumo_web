@@ -51,7 +51,7 @@
       </v-card>
       <div class="pl-10 pr-10 d-flex align-center pb-10 chat-input">
         <v-text-field class="pr-6" 
-                      placeholder="채팅 내용을 입력해주세요" v-model="sendMessageData.chatMessage">
+                      placeholder="채팅 내용을 입력해주세요" v-model="sendMessageData.message">
         </v-text-field>
         <v-btn color="accent" @click="sendMessage" >전송!</v-btn>
       </div>
@@ -70,6 +70,20 @@
         this.dialog = this.chatStatus;
       },
     },
+    data () {
+      return {
+        dialog: false,
+        notifications: false,
+        sound: true,
+        widgets: false,
+        sendMessageData: {
+          chatId: "",
+          username: "",
+          message: "",
+        },
+        stompClient: null,
+      }
+    },
     methods:{
       closeChat: function(){
         this.dialog = false;
@@ -77,9 +91,6 @@
       },
       sendMessage(){
         let data = {"message" : "hi", "username": "choi"};
-        console.log("send message");
-        console.log(JSON.stringify(data))
-        // this.stompClient.send("/pub/chat/message", {}, JSON.stringify(data));
 
         this.stompClient.send("/pub/chat/message", JSON.stringify(data), {});
       },
@@ -94,8 +105,7 @@
               this.connected = true;
               console.log("소켓 연결 성공 " + frame);
 
-              this.stompClient.subscribe("/sub/topic/roomId/topicExample", res=>{
-                alert(1);
+              this.stompClient.subscribe("/sub/chat/room/topicExample", res=>{
                 console.log("구독으로 받은 메시지 입니다.", res.body);
                 
               }, error=>{
@@ -108,26 +118,11 @@
               this.connected = false;
             }
           )
-
-
       },
     },
     mounted() {
       this.dialog = this.chatStatus;
       this.connect();
-    },
-    data () {
-      return {
-        dialog: false,
-        notifications: false,
-        sound: true,
-        widgets: false,
-        sendMessageData: {
-          chatId: 1,
-          chatMessage: "",
-        },
-        stompClient: null,
-      }
     },
   }
 </script>

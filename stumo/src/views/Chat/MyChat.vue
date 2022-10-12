@@ -47,10 +47,20 @@
 
 <script>
 import Chat from './Chat.vue';
+import Stomp from 'webstomp-client'
+import SockJS from 'sockjs-client/dist/sockjs.min.js'
 
 export default {
   name: "Home",
   components: {
+  },
+  data(){
+    return{
+        chatStatus: null,
+        chatList:[
+        ],
+        stompClientList: [],
+    }
   },
   methods:{
     openChat(chatId){
@@ -65,23 +75,45 @@ export default {
                     this.chatList = res.data;
                   })
                   .catch((error) => {
-                    console.log(error);
+                    alert("채팅 목록을 가져오는 중 실패하였습니다." + error);
                   })
                   .finally(()=>{
                     //console.log("finally Test");
+                    // chatlist 의 방번호를 기준으로 모두 socket 연결한다.
+                    this.connectChatRoom();
                   });
-    }
+    },
+    connectChatRoom(){
+      this.chatList.forEach(chat => {
+        this.connect(chat.meetingNo)
+      });
+    },
+    connect(meetingNo){
+        const serverURL = "http://localhost:8080/chatting";
+        let stompListIndex = this.stompClientList.length-1;
+
+        let socket = new SockJS(serverURL);
+        this.stompClientList[stompListIndex] = Stomp.over(socket);
+        this.stompClientList[stompListIndex].connect(
+          {},
+          frame => {
+            console.log("소켓 연결 성공 " + frame);
+            this.stompClientList[stompListIndex].subscribe("/sub/chat/room/" + meetingNo, res=>{
+              console.log("구독으로 받은 메시지 입니다.", res.body);
+            }, error=>{
+              console.log(111);
+            })
+
+          },
+          error => {
+            alert("채팅 연결 실패")
+          }
+        )
+    },
   },
   mounted (){
     this.chatStatus = false;
     this.getMyChatRoom();
-  },
-  data(){
-    return{
-        chatStatus: null,
-        chatList:[
-        ],
-    }
   },
   components:{
     Chat,
