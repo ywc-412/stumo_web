@@ -64,10 +64,20 @@
   import SockJS from 'sockjs-client/dist/sockjs.min.js'
 
   export default {
-    props: ["chatStatus"],
+    props: ["chatStatus", "chatroomid"],
     watch: {
       chatStatus(){
         this.dialog = this.chatStatus;
+        this.roomid = this.chatroomid;
+        console.log(this.dialog)
+        if (this.dialog == true){
+          this.sendMessageData.roomid = this.roomid;
+          this.enterChatRoom();
+          // this.connect();
+        }else{
+          this.sendMessageData.roomid = "";
+          this.disconnect();
+        }
       },
     },
     data () {
@@ -76,8 +86,9 @@
         notifications: false,
         sound: true,
         widgets: false,
+        roomid: "",
         sendMessageData: {
-          chatId: "",
+          roomid: "",
           username: "",
           message: "",
         },
@@ -90,39 +101,51 @@
         this.$emit("closeChatStatus", this.dialog);
       },
       sendMessage(){
-        let data = {"message" : "hi", "username": "choi"};
-
-        this.stompClient.send("/pub/chat/message", JSON.stringify(data), {});
+        this.stompClient.send("/pub/chat/message", JSON.stringify(this.sendMessageData), {});
+      },
+      enterChatRoom(){
+        this.$axios.post("/chat/" + this.roomid + "/enter", this.sendMessageData)
+                    .then((res) => {
+                      if (res.status == 200){
+                        this.connect();
+                      }
+                    })
+                    .catch((error) => {
+                      alert("채팅방 정보를 가져오는 중 실패하였습니다." + error);
+                    })
+                    .finally(()=>{
+                    });
       },
       connect(){
-          const serverURL = "http://localhost:8080/chatting";
-          let socket = new SockJS(serverURL);
-          this.stompClient = Stomp.over(socket);
+        const serverURL = "http://localhost:8080/chatting";
+        let socket = new SockJS(serverURL);
+        this.stompClient = Stomp.over(socket);
 
-          this.stompClient.connect(
-            {},
-            frame => {
-              this.connected = true;
-              console.log("소켓 연결 성공 " + frame);
+        this.stompClient.connect(
+          {},
+          frame => {
+            this.connected = true;
+            this.stompClient.subscribe("/sub/chat/room/"+this.roomid, res=>{
+              console.log("구독으로 받은 메시지 입니다.", res.body);
+              
+            }, error=>{
+              
+            })
 
-              this.stompClient.subscribe("/sub/chat/room/topicExample", res=>{
-                console.log("구독으로 받은 메시지 입니다.", res.body);
-                
-              }, error=>{
-                console.log(111);
-              })
-
-            },
-            error => {
-              console.log("소켓 연결 실패", error);
-              this.connected = false;
-            }
-          )
+          },
+          error => {
+            
+            this.connected = false;
+          }
+        )
       },
+      disconnect(){
+        console.log("disconnect function...");
+      }
     },
     mounted() {
       this.dialog = this.chatStatus;
-      this.connect();
+      // this.connect();
     },
   }
 </script>

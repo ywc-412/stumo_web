@@ -15,7 +15,7 @@
                             :elevation="hover ? 12 : 0"
                             flat
                             hover
-                            @click="openChat(chat.chatId)">
+                            @click="openChat(chat.chatId, chat.meetingNo)">
                       <v-card-text>
                         
                         <!-- meeting content -->
@@ -40,7 +40,7 @@
         </div>
       </v-col>
     </v-row>
-    <Chat v-bind:chatStatus="chatStatus" @closeChatStatus="closeChatStatus"/>
+    <Chat v-bind:chatStatus="chatStatus" v-bind:chatroomid="roomid" @closeChatStatus="closeChatStatus"/>
   </div>
 
 </template>
@@ -57,14 +57,16 @@ export default {
   data(){
     return{
         chatStatus: null,
+        roomid:"",
         chatList:[
         ],
         stompClientList: [],
     }
   },
   methods:{
-    openChat(chatId){
+    openChat(chatId, roomid){
       this.chatStatus = this.chatStatus == true ? false : true;
+      this.roomid = roomid;
     },
     closeChatStatus(status){
       this.chatStatus = status;
@@ -84,29 +86,28 @@ export default {
                   });
     },
     connectChatRoom(){
+      const serverURL = "http://localhost:8080/chatting";
+
+      let socket = new SockJS(serverURL);
       this.chatList.forEach(chat => {
-        this.connect(chat.meetingNo)
+        this.connect(chat.meetingNo, socket)
       });
     },
-    connect(meetingNo){
-        const serverURL = "http://localhost:8080/chatting";
+    connect(meetingNo, socket){
         let stompListIndex = this.stompClientList.length-1;
-
-        let socket = new SockJS(serverURL);
         this.stompClientList[stompListIndex] = Stomp.over(socket);
         this.stompClientList[stompListIndex].connect(
           {},
           frame => {
-            console.log("소켓 연결 성공 " + frame);
             this.stompClientList[stompListIndex].subscribe("/sub/chat/room/" + meetingNo, res=>{
-              console.log("구독으로 받은 메시지 입니다.", res.body);
+              console.log("-구독으로 받은 메시지 입니다.", res.body);
             }, error=>{
-              console.log(111);
+              
             })
 
           },
           error => {
-            alert("채팅 연결 실패")
+            
           }
         )
     },
