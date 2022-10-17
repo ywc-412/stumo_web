@@ -97,6 +97,7 @@ export default {
                     if (res.data == ""){
                       this.btnItems = [...this.defaultBtnItems];
                     } else {
+                      this.$userinfo = res.data;
                       this.btnItems = [...this.loginedBtnItems];
                     }
                   })

@@ -7,6 +7,7 @@ import Notifications from 'vue-notification'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
+Vue.prototype.$userinfo = null;
 //Vue.prototype.dialog = VuetifyDialog;
 
 Vue.use(Notifications);

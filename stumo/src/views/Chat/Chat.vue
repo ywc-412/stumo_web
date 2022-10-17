@@ -22,7 +22,7 @@
           >
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>사이드 프로젝트 하실 분 구해요 ㅎㅎ</v-toolbar-title>
+          <v-toolbar-title>{{chatroomTitle}}</v-toolbar-title>
           <v-spacer></v-spacer>
         </v-toolbar>
         <v-list
@@ -32,18 +32,11 @@
           class="pl-10"
         >
             <div class="chat">
-              <v-list-item>
+              <v-list-item v-for="chat in chatList" :key="chat.messageNo">
                 <v-list-item-content>
-                  <v-list-item-title>둔이둔이</v-list-item-title>
-                  <v-list-item-subtitle>2022.08.17 10:01</v-list-item-subtitle>
-                  <v-list-item-subtitle>우리 저기 뭐냐 언제 어디서 볼까요?</v-list-item-subtitle>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-content>
-                  <v-list-item-title>둔이둔이</v-list-item-title>
-                  <v-list-item-subtitle>2022.08.17 10:01</v-list-item-subtitle>
-                  <v-list-item-subtitle>우리 저기 뭐냐 언제 어디서 볼까요?</v-list-item-subtitle>
+                  <v-list-item-title>{{chat.username}}</v-list-item-title>
+                  <v-list-item-subtitle>{{chat.crtDate}}</v-list-item-subtitle>
+                  <v-list-item-subtitle>{{chat.message}}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
             </div>
@@ -64,12 +57,11 @@
   import SockJS from 'sockjs-client/dist/sockjs.min.js'
 
   export default {
-    props: ["chatStatus", "chatroomid"],
+    props: ["chatStatus", "chatroomid", "chatroomTitle"],
     watch: {
       chatStatus(){
         this.dialog = this.chatStatus;
         this.roomid = this.chatroomid;
-        console.log(this.dialog)
         if (this.dialog == true){
           this.sendMessageData.roomid = this.roomid;
           this.enterChatRoom();
@@ -87,8 +79,13 @@
         sound: true,
         widgets: false,
         roomid: "",
+        chatList:[{
+          // username: "",
+          // crtDate: null,
+        }],
         sendMessageData: {
           roomid: "",
+          userId: "",
           username: "",
           message: "",
         },

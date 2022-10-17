@@ -15,7 +15,7 @@
                             :elevation="hover ? 12 : 0"
                             flat
                             hover
-                            @click="openChat(chat.chatId, chat.meetingNo)">
+                            @click="openChat(chat.chatId, chat.meetingNo, chat.content)">
                       <v-card-text>
                         
                         <!-- meeting content -->
@@ -40,7 +40,7 @@
         </div>
       </v-col>
     </v-row>
-    <Chat v-bind:chatStatus="chatStatus" v-bind:chatroomid="roomid" @closeChatStatus="closeChatStatus"/>
+    <Chat v-bind:chatStatus="chatStatus" v-bind:chatroomid="roomid" v-bind:chatroomTitle="chatroomTitle" @closeChatStatus="closeChatStatus"/>
   </div>
 
 </template>
@@ -58,15 +58,17 @@ export default {
     return{
         chatStatus: null,
         roomid:"",
+        chatroomTitle:"",
         chatList:[
         ],
         stompClientList: [],
     }
   },
   methods:{
-    openChat(chatId, roomid){
+    openChat(chatId, roomid, chatroomTitle){
       this.chatStatus = this.chatStatus == true ? false : true;
       this.roomid = roomid;
+      this.chatroomTitle = chatroomTitle;
     },
     closeChatStatus(status){
       this.chatStatus = status;
@@ -80,8 +82,6 @@ export default {
                     alert("채팅 목록을 가져오는 중 실패하였습니다." + error);
                   })
                   .finally(()=>{
-                    //console.log("finally Test");
-                    // chatlist 의 방번호를 기준으로 모두 socket 연결한다.
                     this.connectChatRoom();
                   });
     },
@@ -113,6 +113,8 @@ export default {
     },
   },
   mounted (){
+    console.log("ㅈ전역변수를 테스트합니다.");
+    console.log(this.$userinfo);
     this.chatStatus = false;
     this.getMyChatRoom();
   },
