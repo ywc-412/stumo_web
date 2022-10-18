@@ -44,7 +44,7 @@
       </v-card>
       <div class="pl-10 pr-10 d-flex align-center pb-10 chat-input">
         <v-text-field class="pr-6" 
-                      placeholder="채팅 내용을 입력해주세요" v-model="sendMessageData.message">
+                      placeholder="채팅 내용을 입력해주세요" v-model="sendMessageData.message" @keyup.enter="sendMessage">
         </v-text-field>
         <v-btn color="accent" @click="sendMessage" >전송!</v-btn>
       </div>
@@ -85,7 +85,7 @@
         }],
         sendMessageData: {
           roomid: "",
-          userId: "",
+          userId: this.$store.state.userinfo.id,
           username: "",
           message: "",
         },
@@ -99,6 +99,7 @@
       },
       sendMessage(){
         this.stompClient.send("/pub/chat/message", JSON.stringify(this.sendMessageData), {});
+        this.sendMessageData.message = "";
       },
       enterChatRoom(){
         this.$axios.post("/chat/" + this.roomid + "/enter", this.sendMessageData)
@@ -141,6 +142,7 @@
       }
     },
     mounted() {
+      console.log(this.$store.state.userinfo.id);
       this.dialog = this.chatStatus;
       // this.connect();
     },
