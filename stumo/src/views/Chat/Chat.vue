@@ -35,7 +35,7 @@
               <v-list-item v-for="chat in chatList" :key="chat.messageNo">
                 <v-list-item-content>
                   <v-list-item-title>{{chat.username}}</v-list-item-title>
-                  <v-list-item-subtitle>{{chat.crtDate}}</v-list-item-subtitle>
+                  <v-list-item-subtitle style="font-size:0.7em;">{{chat.crtDate | moment('YYYY-MM-DD HH:mm:ss')}}</v-list-item-subtitle>
                   <v-list-item-subtitle>{{chat.message}}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
@@ -79,13 +79,10 @@
         sound: true,
         widgets: false,
         roomid: "",
-        chatList:[{
-          // username: "",
-          // crtDate: null,
-        }],
+        chatList:[],
         sendMessageData: {
           roomid: "",
-          userId: this.$store.state.userinfo.id,
+          userId: "",
           username: "",
           message: "",
         },
@@ -105,6 +102,8 @@
         this.$axios.post("/chat/" + this.roomid + "/enter", this.sendMessageData)
                     .then((res) => {
                       if (res.status == 200){
+                        this.sendMessageData.userId = this.$store.state.userinfo.id;
+                        this.sendMessageData.username = this.$store.state.userinfo.nickname;
                         this.connect();
                       }
                     })
@@ -124,7 +123,10 @@
           frame => {
             this.connected = true;
             this.stompClient.subscribe("/sub/chat/room/"+this.roomid, res=>{
-              console.log("구독으로 받은 메시지 입니다.", res.body);
+              console.log(res.body);
+              this.chatList.push(JSON.parse(res.body));
+              
+              console.log(this.chatList);
               
             }, error=>{
               
@@ -142,7 +144,6 @@
       }
     },
     mounted() {
-      console.log(this.$store.state.userinfo.id);
       this.dialog = this.chatStatus;
       // this.connect();
     },
