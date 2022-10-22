@@ -43,8 +43,7 @@
         </v-list>
       </v-card>
       <div class="pl-10 pr-10 d-flex align-center pb-10 chat-input">
-        <v-text-field class="pr-6" 
-                      placeholder="채팅 내용을 입력해주세요" v-model="sendMessageData.message" @keyup.enter="sendMessage">
+        <v-text-field class="pr-6" placeholder="채팅 내용을 입력해주세요" v-model="sendMessageData.message" @keyup.enter="sendMessage">
         </v-text-field>
         <v-btn color="accent" @click="sendMessage" >전송!</v-btn>
       </div>
@@ -99,9 +98,21 @@
         this.sendMessageData.message = "";
       },
       enterChatRoom(){
+        this.$axios.get("/chat/" + this.roomid)
+                    .then((res)=>{
+                      this.chatList = res.data;
+                      console.log("chatting 목록 가져옴");
+                      console.log(this.chatList);
+                    })
+                    .catch((error)=>{
+                      alert("채팅목록을 가져오는 중 실패하였습니다.");
+                    })
+                    .finally(()=>{
+                    });
+
         this.$axios.post("/chat/" + this.roomid + "/enter", this.sendMessageData)
                     .then((res) => {
-                      if (res.status == 200){
+                      if (res.status == 200) {
                         this.sendMessageData.userId = this.$store.state.userinfo.id;
                         this.sendMessageData.username = this.$store.state.userinfo.nickname;
                         this.connect();
@@ -134,7 +145,6 @@
 
           },
           error => {
-            
             this.connected = false;
           }
         )
