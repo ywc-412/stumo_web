@@ -32,13 +32,29 @@
           class="pl-10"
         >
             <div class="chat">
+              <v-row style="margin: 0px;" v-for="chat in chatList" :key="chat.messageNo">
+                <v-col cols="3">
+                  <div></div>
+                  <p class="mb-1">{{chat.username}}</p>
+                  <v-card class="mb-1">
+                    <p class="ml-5 mr-5">{{chat.message}}</p>
+                  </v-card>
+                  <p style="font-size:0.7em; height:100%;">{{chat.crtDate | moment('YYYY-MM-DD HH:mm:ss')}}</p>
+                </v-col>
+              </v-row>
+
+                <!--
               <v-list-item v-for="chat in chatList" :key="chat.messageNo">
-                <v-list-item-content>
-                  <v-list-item-title>{{chat.username}}</v-list-item-title>
-                  <v-list-item-subtitle style="font-size:0.7em;">{{chat.crtDate | moment('YYYY-MM-DD HH:mm:ss')}}</v-list-item-subtitle>
-                  <v-list-item-subtitle>{{chat.message}}</v-list-item-subtitle>
-                </v-list-item-content>
+
+                <v-card class="mt-1 mb-1">
+                  <v-list-item-content class="ml-4 mr-4 mt-1 mb-1">
+                    <v-list-item-title>{{chat.username}}</v-list-item-title>
+                    <v-list-item-subtitle>{{chat.message}}</v-list-item-subtitle>
+                    <v-list-item-subtitle align="bottom" style="font-size:0.7em; height:100%;">{{chat.crtDate | moment('YYYY-MM-DD HH:mm:ss')}}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-card>
               </v-list-item>
+                -->
             </div>
         </v-list>
       </v-card>
