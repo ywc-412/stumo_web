@@ -31,7 +31,8 @@
           id="inb"
           class="pl-10"
         >
-            <div class="chat">
+            <div class="chat"
+          ref="chatContainer">
               <v-row style="margin: 0px;" v-for="chat in chatList" :key="chat.messageNo">
                 <v-col cols="3">
                   <div></div>
@@ -124,6 +125,9 @@
                       alert("채팅목록을 가져오는 중 실패하였습니다.");
                     })
                     .finally(()=>{
+                      let chat = this.$refs.chatContainer;
+                      chat.scrollTo({top:chat.scrollHeight, behavior: 'smooth'});
+                      
                     });
 
         this.$axios.post("/chat/" + this.roomid + "/enter", this.sendMessageData)
