@@ -106,13 +106,46 @@
       }
     },
     methods:{
+      // Component 제어부 START
       closeChat: function(){
         this.dialog = false;
         this.$emit("closeChatStatus", this.dialog);
       },
+      setScrollBottom(){
+        let chat = this.$refs.chatContainer;
+        chat.scrollTo({top:chat.scrollHeight, behavior: 'smooth'});
+      },
+      // Component 제어부 END
+      // Validation 체크 부 START
+      chkSendMessage(){
+        if (this.isNull(this.sendMessageData.roomid) || this.isNull(this.sendMessageData.userId) || this.isNull(this.sendMessageData.username)){
+          console.log("알 수 없는 에러로 인해, 채팅 메시지를 보낼 수 없습니다.");
+          return false;
+        }
+        else if (this.isNull(this.sendMessageData.message))
+        {
+          console.log("메시지 없음.");
+          return false;
+        }
+
+        return true;
+      },
+      // Validation 체크 부 END
+      // 개발자 함수부 START
+      isNull(obj){
+        if (obj === undefined || obj === null || obj === ''){
+          return true;
+        }
+
+        return false;
+      },
+      // 개발자 함수부 END
+      // Socket 연결 부 START
       sendMessage(){
-        this.stompClient.send("/pub/chat/message", JSON.stringify(this.sendMessageData), {});
-        this.sendMessageData.message = "";
+        if (this.chkSendMessage()){
+          this.stompClient.send("/pub/chat/message", JSON.stringify(this.sendMessageData), {});
+          this.sendMessageData.message = "";
+        }
       },
       enterChatRoom(){
         this.$axios.get("/chat/" + this.roomid)
@@ -125,9 +158,7 @@
                       alert("채팅목록을 가져오는 중 실패하였습니다.");
                     })
                     .finally(()=>{
-                      let chat = this.$refs.chatContainer;
-                      chat.scrollTo({top:chat.scrollHeight, behavior: 'smooth'});
-                      
+                      this.setScrollBottom();
                     });
 
         this.$axios.post("/chat/" + this.roomid + "/enter", this.sendMessageData)
@@ -154,11 +185,10 @@
           frame => {
             this.connected = true;
             this.stompClient.subscribe("/sub/chat/room/"+this.roomid, res=>{
+              console.log("아?")
               console.log(res.body);
               this.chatList.push(JSON.parse(res.body));
-              
-              console.log(this.chatList);
-              
+              this.setScrollBottom();
             }, error=>{
               
             })
@@ -173,6 +203,7 @@
         console.log("disconnect function...");
       }
     },
+    // Socket 연결 부 END
     mounted() {
       this.dialog = this.chatStatus;
       // this.connect();
