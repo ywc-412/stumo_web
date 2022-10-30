@@ -31,8 +31,7 @@
           id="inb"
           class="pl-10"
         >
-            <div class="chat"
-          ref="chatContainer">
+            <div class="chat" ref="chatContainer" @scroll="scrollEvent">
               <v-row style="margin: 0px;" v-for="chat in chatList" :key="chat.messageNo">
                 <v-col cols="3">
                   <div></div>
@@ -115,6 +114,12 @@
         let chat = this.$refs.chatContainer;
         chat.scrollTo({top:chat.scrollHeight, behavior: 'smooth'});
       },
+      scrollEvent(e){
+        console.log(this.$refs.chatContainer.scrollTop)
+        if (this.$refs.chatContainer.scrollTop === 0){
+          console.log("더 가져와..");
+        }
+      },
       // Component 제어부 END
       // Validation 체크 부 START
       chkSendMessage(){
@@ -184,6 +189,7 @@
           {},
           frame => {
             this.connected = true;
+            alert(this.roomid);
             this.stompClient.subscribe("/sub/chat/room/"+this.roomid, res=>{
               console.log("아?")
               console.log(res.body);
@@ -200,6 +206,7 @@
         )
       },
       disconnect(){
+        this.stompClient.disconnect();
         console.log("disconnect function...");
       }
     },
