@@ -6,11 +6,10 @@ axios.defaults.withCredentials = true;
 
 axios.interceptors.request.use(
     (config)=>{
-        console.log("==============");
-        console.log(store.state.userinfo);
-        console.log("==============");
         config.headers["Content-Type"] = "application/json; charset=UTF-8";
-        config.headers["UserInfo"] = "userinfo";
+        config.headers["Stumo-Userid"] = store.state.userinfo.id;
+        // config.headers["Stumo-Nickname"] = store.state.userinfo.nickname;
+        
         return config;
     },
     (error)=> {
