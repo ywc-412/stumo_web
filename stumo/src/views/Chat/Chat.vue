@@ -94,6 +94,7 @@
         sound: true,
         widgets: false,
         roomid: "",
+        page:1,
         chatList:[],
         sendMessageData: {
           roomid: "",
@@ -145,15 +146,16 @@
         return false;
       },
       // 개발자 함수부 END
-      // Socket 연결 부 START
-      sendMessage(){
-        if (this.chkSendMessage()){
-          this.stompClient.send("/pub/chat/message", JSON.stringify(this.sendMessageData), {});
-          this.sendMessageData.message = "";
+      // transaction START
+      getMessages(){
+        let recentMessageNo = 0;
+        if (this.chatList.length == 0){
+          recentMessageNo = 0;
+        } else if (this.chatList.length != 0){
+          recentMessageNo = this.chatList[0].messageNo;
         }
-      },
-      enterChatRoom(){
-        this.$axios.get("/chat/" + this.roomid)
+
+        this.$axios.get("/chat/" + this.roomid + "/" + this.page + "/" + recentMessageNo)
                     .then((res)=>{
                       this.chatList = res.data;
                       console.log("chatting 목록 가져옴");
@@ -165,7 +167,8 @@
                     .finally(()=>{
                       this.setScrollBottom();
                     });
-
+      },
+      connectChatRoom(){
         this.$axios.post("/chat/" + this.roomid + "/enter", this.sendMessageData)
                     .then((res) => {
                       if (res.status == 200) {
@@ -180,6 +183,19 @@
                     .finally(()=>{
                     });
       },
+      // transaction END
+      // Socket 연결 부 START
+      sendMessage(){
+        if (this.chkSendMessage()){
+          this.stompClient.send("/pub/chat/message", JSON.stringify(this.sendMessageData), {});
+          this.sendMessageData.message = "";
+        }
+      },
+      enterChatRoom(){
+        this.getMessages();
+
+        this.connectChatRoom();
+      },
       connect(){
         const serverURL = "http://localhost:8080/chatting";
         let socket = new SockJS(serverURL);
@@ -189,10 +205,7 @@
           {},
           frame => {
             this.connected = true;
-            alert(this.roomid);
             this.stompClient.subscribe("/sub/chat/room/"+this.roomid, res=>{
-              console.log("아?")
-              console.log(res.body);
               this.chatList.push(JSON.parse(res.body));
               this.setScrollBottom();
             }, error=>{
@@ -206,13 +219,14 @@
         )
       },
       disconnect(){
+        // stomp client disconnect
         this.stompClient.disconnect();
-        console.log("disconnect function...");
       }
     },
     // Socket 연결 부 END
     mounted() {
       this.dialog = this.chatStatus;
+      this.page = 0;
       // this.connect();
     },
   }
