@@ -35,6 +35,7 @@
               <v-row style="margin: 0px;" v-for="chat in chatList" :key="chat.messageNo">
                 <v-col cols="3">
                   <div></div>
+                  <p class="mb-1">{{chat.messageNo}}</p>
                   <p class="mb-1">{{chat.username}}</p>
                   <v-card class="mb-1">
                     <p class="ml-5 mr-5">{{chat.message}}</p>
@@ -79,6 +80,8 @@
         this.roomid = this.chatroomid;
         if (this.dialog == true){
           this.sendMessageData.roomid = this.roomid;
+
+          this.initChatRoom();
           this.enterChatRoom();
           // this.connect();
         }else{
@@ -96,6 +99,7 @@
         roomid: "",
         page:1,
         chatList:[],
+        chatTempList:[],
         sendMessageData: {
           roomid: "",
           userId: "",
@@ -113,12 +117,12 @@
       },
       setScrollBottom(){
         let chat = this.$refs.chatContainer;
-        chat.scrollTo({top:chat.scrollHeight, behavior: 'smooth'});
+        // chat.scrollTo({top:chat.scrollHeight, behavior: 'smooth'});
       },
       scrollEvent(e){
         console.log(this.$refs.chatContainer.scrollTop)
         if (this.$refs.chatContainer.scrollTop === 0){
-          console.log("더 가져와..");
+          this.getMessages();
         }
       },
       // Component 제어부 END
@@ -138,6 +142,9 @@
       },
       // Validation 체크 부 END
       // 개발자 함수부 START
+      async initChatRoom(){
+        this.chatList = [];
+      },
       isNull(obj){
         if (obj === undefined || obj === null || obj === ''){
           return true;
@@ -147,18 +154,23 @@
       },
       // 개발자 함수부 END
       // transaction START
-      getMessages(){
+      async getMessages(){
         let recentMessageNo = 0;
         if (this.chatList.length == 0){
           recentMessageNo = 0;
         } else if (this.chatList.length != 0){
           recentMessageNo = this.chatList[0].messageNo;
         }
-
+        
         this.$axios.get("/chat/" + this.roomid + "/" + this.page + "/" + recentMessageNo)
                     .then((res)=>{
-                      this.chatList = res.data;
-                      console.log("chatting 목록 가져옴");
+                      this.chatTempList = res.data;
+
+                      this.chatList = [
+                        ...this.chatTempList,
+                        ...this.chatList
+                      ]
+                      console.log("=======")
                       console.log(this.chatList);
                     })
                     .catch((error)=>{
@@ -168,7 +180,7 @@
                       this.setScrollBottom();
                     });
       },
-      connectChatRoom(){
+      async connectChatRoom(){
         this.$axios.post("/chat/" + this.roomid + "/enter", this.sendMessageData)
                     .then((res) => {
                       if (res.status == 200) {
