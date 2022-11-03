@@ -32,9 +32,9 @@
         >
             <div class="chat" ref="chatContainer" @scroll="scrollEvent">
               <v-row style="margin: 0px;" v-for="chat in chatList" :key="chat.messageNo">
-                <v-col col="9" v-if="chat.userId == sendMessageData.userId">
+                <v-col col="9" v-if="chat.userId === sendMessageData.userId">
                 </v-col>
-                <v-col cols="3" align="right">
+                <v-col cols="3" :align="chat.userId === sendMessageData.userId ? right : left" class="fadeInBottom">
                   <!--<p class="mb-1">{{chat.messageNo}}</p> 디버깅용-->
                     <p class="mb-1">{{chat.username}}</p>
                     <v-card class="mb-1">
@@ -47,7 +47,7 @@
         </v-list>
       </v-card>
       <div class="pl-10 pr-10 d-flex align-center pb-10 chat-input">
-        <v-text-field class="pr-6" placeholder="채팅 내용을 입력해주세요" v-model="sendMessageData.message" @keyup.enter="sendMessage">
+        <v-text-field class="pr-6" placeholder="채팅 내용을 입력해주세요" v-model="sendMessageData.message" @keypress.enter="sendMessage">
         </v-text-field>
         <v-btn color="accent" @click="sendMessage" >전송!</v-btn>
       </div>
@@ -89,6 +89,7 @@
         page:1,
         chatList:[],
         chatTempList:[],
+        isCallGetMessage: false,
         sendMessageData: {
           roomid: "",
           userId: "",
@@ -106,10 +107,10 @@
         this.$emit("closeChatStatus", this.dialog);
       },
       async setScrollBottom(){
-        // 채팅창 마지막으로 스크롤을 위치시킨다.
-        this.$refs.chatContainer.scrollTo({top:chat.scrollHeight, behavior: 'smooth'});
-        // console.log(chat);
-        // chat.scrollTo({top:chat.scrollHeight, behavior: 'smooth'});
+        this.$nextTick(()=>{
+          // 채팅창 마지막으로 스크롤을 위치시킨다.
+          this.$refs.chatContainer.scrollTo({top:this.$refs.chatContainer.scrollHeight, behavior: 'smooth'});
+        });
       },
       scrollEvent(e){
         // 스크롤 이동 시 이벤트 발생.
@@ -145,6 +146,11 @@
 
         return false;
       },
+      async responseMessage(response){
+        // subscribe가 정상적으로 완료되면 다른 사용자가 해당 룸에 메시지를 보낼때, 아래 로직을 실행한다.
+        this.chatList.push(JSON.parse(response.body));
+        this.setScrollBottom();
+      },
       // 개발자 함수부 END
       // transaction START
       async getMessages(){
@@ -154,23 +160,27 @@
         if (this.chatList.length != 0){
           recentMessageNo = this.chatList[0].messageNo;
         }
-        
-        this.$axios.get("/chat/" + this.roomid + "/" + this.page + "/" + recentMessageNo)
-                    .then((res)=>{
-                      console.log(res.data)
-                      this.chatTempList = res.data;
-                      // 새로 가져온 데이터는 앞쪽부터 밀어넣는다.
-                      this.chatList = [
-                        ...this.chatTempList,
-                        ...this.chatList
-                      ]
-                    })
-                    .catch((error)=>{
-                      alert("채팅목록을 가져오는 중 실패하였습니다.");
-                    })
-                    .finally(()=>{
-                      this.setScrollBottom();
-                    });
+
+        // 중복호출 방지
+        if (this.isCallGetMessage === false){
+          this.isCallGetMessage = true;
+          this.$axios.get("/chat/" + this.roomid + "/" + this.page + "/" + recentMessageNo)
+                      .then((res)=>{
+                        this.chatTempList = res.data;
+                        // 새로 가져온 데이터는 앞쪽부터 밀어넣는다.
+                        this.chatList = [
+                          ...this.chatTempList,
+                          ...this.chatList
+                        ]
+                      })
+                      .catch((error)=>{
+                        alert("채팅목록을 가져오는 중 실패하였습니다.");
+                      })
+                      .finally(()=>{
+                        this.isCallGetMessage = false;
+                        this.setScrollBottom();
+                      });
+        }
       },
       async connectChatRoom(){
         // 채팅룸에 연결하기 위해 Backend server 에 message Listener 를 추가하기 위해 api 호출 후 
@@ -191,14 +201,14 @@
       },
       // transaction END
       // Socket 연결 부 START
-      sendMessage(){
+      async sendMessage(){
         // message를 보낸다.
         if (this.chkSendMessage()){
           this.stompClient.send("/pub/chat/message", JSON.stringify(this.sendMessageData), {});
           this.sendMessageData.message = "";
         }
       },
-      enterChatRoom(){
+      async enterChatRoom(){
         // 채팅룸에 입장한다.
         // 채팅룸에 연결 후 메시지를 가져온다.
         this.connectChatRoom();
@@ -214,11 +224,9 @@
           {},
           frame => {
             this.connected = true;
-            this.stompClient.subscribe("/sub/chat/room/"+this.roomid, res=>{
-              // subscribe가 정상적으로 완료되면 다른 사용자가 해당 룸에 메시지를 보낼때, 아래 로직을 실행한다.
-              this.chatList.push(JSON.parse(res.body));
-              this.setScrollBottom();
-            }, error=>{
+            this.stompClient.subscribe("/sub/chat/room/"+this.roomid
+            , this.responseMessage
+            , error=>{
               
             })
 
@@ -238,6 +246,8 @@
       this.dialog = this.chatStatus;
       this.page = 0;
       // this.connect();
+    },
+    created(){
     },
   }
 </script>
@@ -265,5 +275,21 @@
 
   .chat-title{
     background-color: #4E5D00;
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translate3d(0, 100%, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translateZ(0);
+    }
+  }
+
+  .test_obj {
+      position: relative;
+      animation: fadeInUp 0.3s;
   }
 </style>
