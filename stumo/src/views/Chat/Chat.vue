@@ -34,7 +34,7 @@
               <v-row style="margin: 0px;" v-for="chat in chatList" :key="chat.messageNo">
                 <v-col col="9" v-if="chat.userId === sendMessageData.userId">
                 </v-col>
-                <v-col cols="3" :align="chat.userId === sendMessageData.userId ? right : left" class="fadeInBottom">
+                <v-col cols="3" :align="chat.userId === sendMessageData.userId ? 'right' : 'left'" class="fadeInBottom">
                   <!--<p class="mb-1">{{chat.messageNo}}</p> 디버깅용-->
                     <p class="mb-1">{{chat.username}}</p>
                     <v-card class="mb-1">
@@ -178,7 +178,7 @@
                       })
                       .finally(()=>{
                         this.isCallGetMessage = false;
-                        this.setScrollBottom();
+                        // this.setScrollBottom();
                       });
         }
       },
