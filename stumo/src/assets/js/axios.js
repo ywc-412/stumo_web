@@ -10,20 +10,23 @@ axios.interceptors.request.use(
         config.headers["Stumo-Userid"] = store.state.userinfo.id;
         // config.headers["Stumo-Nickname"] = store.state.userinfo.nickname;
         
+        store.state.isLoading = true;
+
         return config;
     },
     (error)=> {
-        console.log(error); 
+        store.state.isLoading = false;
         return Promise.reject(error);
     }
 );
 
 axios.interceptors.response.use(
     (response) => {
+        store.state.isLoading = false;
         return response;
     },
     (error) => {
-        console.log(error);
+        store.state.isLoading = false;
         return Promise.reject(error);
     }
 )

@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <CommComp></CommComp>
     <AppBar></AppBar>
 
     <v-container class="mt-16">
@@ -18,6 +19,7 @@ export default {
 
   components: {
     AppBar: () => import("@/components/layout/appbar.vue"),
+    CommComp: () => import("@/components/comm/commcomp.vue"),
     Confirm: () => import("@/views/Alert/Confirm.vue"),
   },
   data: () => ({

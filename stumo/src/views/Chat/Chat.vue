@@ -178,7 +178,9 @@
                       })
                       .finally(()=>{
                         this.isCallGetMessage = false;
-                        // this.setScrollBottom();
+                        if (recentMessageNo === 0){
+                          this.setScrollBottom();
+                        }
                       });
         }
       },
@@ -290,6 +292,6 @@
 
   .test_obj {
       position: relative;
-      animation: fadeInUp 0.3s;
+      animation: fadeInUp 0.1s;
   }
 </style>
