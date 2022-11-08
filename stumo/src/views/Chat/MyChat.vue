@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" lg="12" xl="8">
         <div>
-
+          <button @click="btnTest('alertmsg')">test</button>
           <!-- 작성한 모집글 -->
           <div class="pt-16 pb-16">
             <h2 class="font-weight-bold pb-4">내 채팅</h2>
@@ -65,6 +65,9 @@ export default {
     }
   },
   methods:{
+    btnTest(msg){
+      this.$alert.alert(msg);
+    },
     openChat(chatId, roomid, chatroomTitle){
       this.chatStatus = this.chatStatus == true ? false : true;
       this.roomid = roomid;
