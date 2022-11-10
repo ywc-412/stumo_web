@@ -123,7 +123,7 @@
       chkSendMessage(){
         // 보내질 데이터들을 검증한다.
         if (this.isNull(this.sendMessageData.roomid) || this.isNull(this.sendMessageData.userId) || this.isNull(this.sendMessageData.username)){
-          alert("알 수 없는 에러로 인해, 채팅 메시지를 보낼 수 없습니다.");
+          this.$dialog.alert("알 수 없는 에러로 인해, 채팅 메시지를 보낼 수 없습니다.");
           return false;
         }
         else if (this.isNull(this.sendMessageData.message)) {
@@ -174,7 +174,7 @@
                         ]
                       })
                       .catch((error)=>{
-                        alert("채팅목록을 가져오는 중 실패하였습니다.");
+                        this.$dialog.alert("채팅목록을 가져오는 중 실패하였습니다.");
                       })
                       .finally(()=>{
                         this.isCallGetMessage = false;
@@ -196,7 +196,7 @@
                       }
                     })
                     .catch((error) => {
-                      alert("채팅방 정보를 가져오는 중 실패하였습니다." + error);
+                      this.$dialog.alert("채팅방 정보를 가져오는 중 실패하였습니다." + error);
                     })
                     .finally(()=>{
                     });

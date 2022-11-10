@@ -3,7 +3,6 @@
     <v-row>
       <v-col cols="12" lg="12" xl="8">
         <div>
-          <button @click="btnTest('alertmsg')">test</button>
           <!-- 작성한 모집글 -->
           <div class="pt-16 pb-16">
             <h2 class="font-weight-bold pb-4">내 채팅</h2>
@@ -65,9 +64,6 @@ export default {
     }
   },
   methods:{
-    btnTest(msg){
-      this.$alert.alert(msg);
-    },
     openChat(chatId, roomid, chatroomTitle){
       this.chatStatus = this.chatStatus == true ? false : true;
       this.roomid = roomid;
@@ -82,7 +78,7 @@ export default {
                     this.chatList = res.data;
                   })
                   .catch((error) => {
-                    alert("채팅 목록을 가져오는 중 실패하였습니다." + error);
+                    this.$dialog.alert("채팅 목록을 가져오는 중 실패하였습니다." + error);
                   })
                   .finally(()=>{
                     this.connectChatRoom();
@@ -116,8 +112,6 @@ export default {
     },
   },
   mounted (){
-    console.log("ㅈ전역변수를 테스트합니다.");
-    console.log(this.$userinfo);
     this.chatStatus = false;
     this.getMyChatRoom();
   },

@@ -1,12 +1,14 @@
 import store from '../../store'
 
 export default {
-    alert(msg){
-        store.state.isOpenDialog = true;
+    alert(msg, callbackFunction){
+        store.state.isOpenAlertDialog = true;
         store.state.dialogMsg = msg;
+        store.state.dialogCallbackFunction = callbackFunction;
     },
-    confirm(msg){
-        store.state.isOpenDialog = true;
+    confirm(msg, callbackFunction){
+        store.state.isOpenConfirmDialog = true;
         store.state.dialogMsg = msg;
+        store.state.dialogCallbackFunction = callbackFunction;
     }
 };

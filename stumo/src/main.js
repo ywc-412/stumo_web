@@ -10,7 +10,7 @@ import alert from './assets/js/alert'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
-Vue.prototype.$alert = alert
+Vue.prototype.$dialog = alert
 //Vue.prototype.dialog = VuetifyDialog;
 
 Vue.use(Notifications);

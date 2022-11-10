@@ -7,7 +7,9 @@ export default new Vuex.Store({
     state:{
         userinfo: {},
         isLoading: false,
-        isOpenDialog: false,
-        dialogMsg: ""
+        isOpenAlertDialog: false,
+        isOpenConfirmDialog: false,
+        dialogMsg: "",
+        dialogCallbackFunction: null
     }
 });
