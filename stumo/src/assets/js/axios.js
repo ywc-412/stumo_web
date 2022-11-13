@@ -8,6 +8,9 @@ axios.interceptors.request.use(
     (config)=>{
         config.headers["Content-Type"] = "application/json; charset=UTF-8";
         config.headers["Stumo-Userid"] = store.state.userinfo.id;
+        
+        // console.log("stumo cookie" + $cookies.get("stumo-token"));
+        config.headers["stumo-token"] = $cookies.get("stumo-token");
         // config.headers["Stumo-Nickname"] = store.state.userinfo.nickname;
         
         store.state.isLoading = true;

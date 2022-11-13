@@ -49,7 +49,7 @@
             align="center"
             justify="space-between"
         >
-          <v-col class="d-flex align-center">
+          <v-col cols="3" class="d-flex align-center">
             <v-app-bar-nav-icon
                 v-if="!$vuetify.breakpoint.mdAndUp"
                 @click.stop="drawer = !drawer"
@@ -71,7 +71,7 @@
                 :outlined="item.outlined"
                 :target="item.target"
                 :to="item.to"
-                class="ml-3 text-capitalize"
+                class="ml-2 text-capitalize"
             >
               <v-icon left>{{ item.icon }}</v-icon>
               {{ item.text }}
@@ -94,18 +94,17 @@ export default {
       this.$axios.get("/login/info")
                   .then((res) => {
                     this.$notify({title: "최영우님!",text: "환영합니다! "});
-                    if (res.data == ""){
-                      this.btnItems = [...this.defaultBtnItems];
-                    } else {
-                      this.$store.state.userinfo = res.data; 
-                      this.btnItems = [...this.loginedBtnItems];
-                    }
+                    this.$store.state.userinfo = res.data; 
+                    this.btnItems = [...this.loginedBtnItems];
+                    // this.btnItems = [...this.defaultBtnItems];
                   })
                   .catch((error) => {
-                    console.log(error);
+                    // this.btnItems = [...this.loginedBtnItems];
+                    this.btnItems = [...this.defaultBtnItems];
                   })
                   .finally(()=>{
                     //console.log("finally Test");
+                    // alert(1);
                   })
     }
   },
@@ -147,6 +146,13 @@ export default {
       {
         text: "채팅룸",
         to: "/myChat",
+        target: "_black",
+        color: "primary",
+        icon: "mdi-account",
+      },
+      {
+        text: "로그아웃",
+        to: "/logout",
         target: "_black",
         color: "primary",
         icon: "mdi-account",
