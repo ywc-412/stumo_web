@@ -10,6 +10,7 @@ axios.interceptors.request.use(
         config.headers["Stumo-Userid"] = store.state.userinfo.id;
         
         // console.log("stumo cookie" + $cookies.get("stumo-token"));
+        // console.log($cookies.get("stumo-token"));
         config.headers["stumo-token"] = $cookies.get("stumo-token");
         // config.headers["Stumo-Nickname"] = store.state.userinfo.nickname;
         

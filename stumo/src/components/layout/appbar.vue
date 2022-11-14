@@ -94,8 +94,12 @@ export default {
       this.$axios.get("/login/info")
                   .then((res) => {
                     this.$notify({title: "최영우님!",text: "환영합니다! "});
-                    this.$store.state.userinfo = res.data; 
-                    this.btnItems = [...this.loginedBtnItems];
+                    this.$store.state.userinfo = res.data;
+                    if (res.data != null && res.data != "" && res.data != undefined){
+                      this.btnItems = [...this.loginedBtnItems];
+                    }else{
+                      this.btnItems = [...this.defaultBtnItems];
+                    }
                     // this.btnItems = [...this.defaultBtnItems];
                   })
                   .catch((error) => {

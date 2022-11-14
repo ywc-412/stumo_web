@@ -17,7 +17,7 @@ Vue.prototype.$dialog = alert
 Vue.use(Notifications);
 Vue.use(vueMoment);
 Vue.use(VueCookies);
-Vue.$cookies.config("7d", '', '', true);
+Vue.$cookies.config("1d");
 
 new Vue({
   vuetify,
