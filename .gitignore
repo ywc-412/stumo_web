@@ -1,2 +1,4 @@
 stumo/node_modules/
 dist
+stumo/yarn.lock
+.gitignore
