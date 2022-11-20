@@ -13,7 +13,17 @@ const routes = [
     {
         path: '/login',
         name: 'Login',
-        component: () => import("@/views/Login.vue"),
+        component: () => import("@/views/Login/Login.vue"),
+    },
+    {
+        path: '/redirectLogin',
+        name: 'RedirectLogin',
+        component: () => import("@/views/Login/RedirectLogin.vue"),
+    },
+    {
+        path: '/logout',
+        name: 'Logout',
+        component: () => import("@/views/Login/Logout.vue"),
     },
     {
         path: '/myPage',

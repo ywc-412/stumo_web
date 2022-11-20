@@ -3,7 +3,6 @@
     <v-row>
       <v-col cols="12" lg="12" xl="8">
         <div>
-
           <!-- 작성한 모집글 -->
           <div class="pt-16 pb-16">
             <h2 class="font-weight-bold pb-4">내 채팅</h2>
@@ -15,11 +14,12 @@
                             :elevation="hover ? 12 : 0"
                             flat
                             hover
-                            @click="openChat(chat.chatId)">
+                            @click="openChat(chat.chatId, chat.meetingNo, chat.content)">
                       <v-card-text>
                         
+                        <!-- meeting content -->
                         <div class="text-h6 font-weight-bold primary--text">
-                          사이드 프로젝트 하실 분 구해요! ㅎㅎㅎ
+                          {{chat.content}}
                         </div>
 
                       </v-card-text>
@@ -39,42 +39,81 @@
         </div>
       </v-col>
     </v-row>
-    <Chat v-bind:chatStatus="chatStatus" @closeChatStatus="closeChatStatus"/>
+    <Chat v-bind:chatStatus="chatStatus" v-bind:chatroomid="roomid" v-bind:chatroomTitle="chatroomTitle" @closeChatStatus="closeChatStatus"/>
   </div>
 
 </template>
 
 <script>
 import Chat from './Chat.vue';
+import Stomp from 'webstomp-client'
+import SockJS from 'sockjs-client/dist/sockjs.min.js'
 
 export default {
-
   name: "Home",
   components: {
-  },
-  methods:{
-    openChat(chatId){
-      this.chatStatus = this.chatStatus == true ? false : true;
-    },
-    closeChatStatus(status){
-      this.chatStatus = status;
-    },
-  },
-  mounted (){
-    this.chatStatus = false;
   },
   data(){
     return{
         chatStatus: null,
+        roomid:"",
+        chatroomTitle:"",
         chatList:[
-          {
-            chatId: 1,
-          },
-          {
-            chatId: 2,
-          }
         ],
+        stompClientList: [],
     }
+  },
+  methods:{
+    openChat(chatId, roomid, chatroomTitle){
+      this.chatStatus = this.chatStatus == true ? false : true;
+      this.roomid = roomid;
+      this.chatroomTitle = chatroomTitle;
+    },
+    closeChatStatus(status){
+      this.chatStatus = status;
+    },
+    getMyChatRoom(){
+      this.$axios.get("/chat")
+                  .then((res) => {
+                    this.chatList = res.data;
+                  })
+                  .catch((error) => {
+                    this.$dialog.alert("채팅 목록을 가져오는 중 실패하였습니다." + error);
+                  })
+                  .finally(()=>{
+                    this.connectChatRoom();
+                  });
+    },
+    connectChatRoom(){
+      const serverURL = "http://localhost:8080/chatting";
+
+      let socket = new SockJS(serverURL);
+      this.chatList.forEach(chat => {
+        this.connect(chat.meetingNo, socket)
+      });
+    },
+    connect(meetingNo, socket){
+        let stompListIndex = this.stompClientList.length-1;
+        this.stompClientList[stompListIndex] = Stomp.over(socket);
+        this.stompClientList[stompListIndex].connect(
+          {},
+          frame => {
+            this.stompClientList[stompListIndex].subscribe("/sub/chat/room/" + meetingNo, res=>{
+              console.log("-구독으로 받은 메시지 입니다.", res.body);
+            }, error=>{
+              
+            })
+
+          },
+          error => {
+            
+          }
+        )
+    },
+  },
+  mounted (){
+    this.chatStatus = false;
+    this.getMyChatRoom();
   },
   components:{
     Chat,
