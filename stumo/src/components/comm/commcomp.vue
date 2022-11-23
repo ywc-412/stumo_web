@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img v-if="isLoading === true" class="loading_bar" src="/assets/img/stumo_loading.gif" alt="Stumo Loading bar">
+    <img v-if="isLoading === true" class="loading_bar" src="/src/assets/img/stumo_loading.gif" alt="Stumo Loading bar">
   </div>
 </template>
 
