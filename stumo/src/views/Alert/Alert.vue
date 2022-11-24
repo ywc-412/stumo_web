@@ -28,13 +28,6 @@
           >
             확인
           </v-btn>
-          <v-btn
-            color="green darken-1"
-            text
-            @click="closeDialog(false)"
-          >
-            취소
-          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -50,13 +43,13 @@
     },
     computed: {
       checkIsOpen() {
-        return this.$store.state.isOpenConfirmDialog;
+        return this.$store.state.isOpenAlertDialog;
       }
     },
     methods: {
       closeDialog(result){
         // confirm dialog 닫기
-        this.$store.state.isOpenConfirmDialog = false;
+        this.$store.state.isOpenAlertDialog = false;
 
         if (this.$store.state.dialogCallbackFunction != null){
           

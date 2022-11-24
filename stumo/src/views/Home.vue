@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="12" lg="12" xl="8">
         <div>
           <div class="pt-16">
 
@@ -83,7 +82,6 @@
             </v-row>
           </div>
         </div>
-      </v-col>
     </v-row>
   </div>
 </template>
