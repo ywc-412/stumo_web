@@ -10,13 +10,9 @@
         <v-card-text class="d-flex justify-center">
             <div class="d-flex justify-center">
                 <v-row>
-                    <v-col v-for="loginImg in loginImgList" :key="loginImg.src" cols="12" lg="6" md="6">
-                        <div >
-                            <a :href="kakaoLoginLink" >
-                              <img style="cursor: pointer" :src=loginImg.src alt="">
-                            </a>
-                        </div>
-                    </v-col>
+                  <a :href="kakaoLoginLink" >
+                    <img style="cursor: pointer" :src="require('@/assets/img/kakao_login.png')" alt="">
+                  </a>
                 </v-row>
             </div>
         </v-card-text>
@@ -30,9 +26,6 @@
         components: {},
         data() {
             return {
-                loginImgList: [
-                    {src: '/src/assets/img/kakao_login.png'}
-                ],
                 kakaoLoginLink: "https://kauth.kakao.com/oauth/authorize?client_id=a8fcd8f59fa1106468fd27d99a1865ea&redirect_uri=http://localhost:8080/api/login/kakao&response_type=code"
             }
         },
