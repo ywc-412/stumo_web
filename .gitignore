@@ -1,3 +1,8 @@
 stumo/node_modules/
 dist
+<<<<<<< HEAD
+stumo/yarn.lock
+.gitignore
+=======
 stumo/package-lock.json
+>>>>>>> 87424e66718f4a5208defe14e2494f057c1bb000
