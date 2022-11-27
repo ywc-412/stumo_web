@@ -15,7 +15,7 @@ export default () => {
             host: HOST,
         },
         resolve: {
-            extensions: ['.vue', '.mjs', '.js', '.ts', '.jsx', '.tsx', '.json'],
+            extensions: ['.vue', '.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.png', '.gif'],
             alias: [
                 {
                     find: '@/',
@@ -42,5 +42,8 @@ export default () => {
                 },
             },
         },
+        build: {
+            chunkSizeWarningLimit: 2000
+        }
     })
 }
