@@ -25,11 +25,14 @@ export default {
   methods: {
     setContent(content){
       this.$refs.toastEditor.invoke('setHTML', content);
+    },
+    getContent(){
+      return this.$refs.toastEditor.invoke("getHtml");
     }
   },
   data(){
     return{
-      editorText: 'This is initialValue.',
+      editorText: '',
       editorOptions: {
           hideModeSwitch: true,
       },
@@ -39,7 +42,7 @@ export default {
     }
   },
   mounted(){
-    this.setContent("<p>MountViewer Content</p>");
+    this.setContent("");
   },
 };
 </script>
