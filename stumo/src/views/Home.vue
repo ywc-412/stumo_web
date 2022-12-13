@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pr-10 pl-10">
     <v-row>
       <v-col cols="12" lg="12" xl="8">
         <div>
@@ -60,21 +60,12 @@
                           <div class="pl-2">{{row.user.nickname}} · {{row.crtDate}}</div>
                         </div>
 
-                        <div class="pt-4 pb-5">
-                          <v-row class="pt-4">
-                            <v-col v-for="i in 2" :key="i" class="flex-shrink-0" cols="auto">
-                              <v-chip color="accent">#Javascript</v-chip>
-                            </v-col>
-                          </v-row>
-                        </div>
-
-                      </v-card-text>
-                    </v-card>
-                  </div>
-                </v-hover>
-              </v-col>
-            </v-row>
-          </div>
+                    </v-card-text>
+                  </v-card>
+                </div>
+              </v-hover>
+            </v-col>
+          </v-row>
         </div>
 
         <div class="pt-4 pb-5">
