@@ -1,8 +1,7 @@
 <template>
   <div>
     <!-- 내가 지원한 글 -->
-    <div class="pt-16 pb-16">
-      <h2 class="font-weight-bold pb-4">지원한 모임</h2>
+    <div class="pt-5 pb-16">
       <v-row>
         <v-col v-for="i in 3" :key="i" cols="12" lg="12" md="6">
           <v-hover v-slot:default="{ hover }" close-delay="50" open-delay="50">
@@ -36,8 +35,6 @@
             </div>
           </v-hover>
         </v-col>
-
-        <v-pagination total-visible="5" length="7"/>
 
       </v-row>
     </div>

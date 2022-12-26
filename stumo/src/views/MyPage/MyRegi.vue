@@ -1,10 +1,9 @@
 <template>
   <div>
     <!-- 작성한 모집글 -->
-    <div class="pt-16 pb-16">
-      <h2 class="font-weight-bold pb-4">작성한 모집글</h2>
+    <div class="pt-5 pb-16">
       <v-row>
-        <v-col v-for="i in 3" :key="i" cols="12" lg="12" md="12">
+        <v-col v-for="meeting in myMeetingList" :key="meeting.meetingNo" cols="12" lg="12" md="12">
           <v-hover v-slot:default="{ hover }" close-delay="50" open-delay="50">
             <div class="card_border">
               <v-card :color="hover ? 'white' : 'transparent'"
@@ -14,12 +13,7 @@
                       to="/moView">
                 <v-card-text>
                   <div class="text-h6 font-weight-bold primary--text">
-                    사이드 프로젝트 하실 분 구해요! ㅎㅎㅎ
-                  </div>
-
-                  <div class="text-body-1 py-4">
-                    Ultrices sagittis orci a scelerisque. Massa placerat
-                    duis ultricies lacus sed turpis
+                    {{meeting.title}}
                   </div>
                 </v-card-text>
                 <div class="pl-9 pt-1 pb-8">
@@ -32,8 +26,6 @@
           </v-hover>
         </v-col>
 
-        <v-pagination total-visible="5" length="7"/>
-
       </v-row>
     </div>
   </div>
@@ -45,15 +37,27 @@ export default {
   name: "Home",
   data(){
     return{
+      myMeetingList : {}
     }
   },    
   methods:{
     getMyRegi(){
-      
+      this.$axios.get("/meeting/my/1")
+                  .then((res) => {
+                    this.myMeetingList = res.data;
+                    console.log(this.myMeetingList);
+                    // this.chatList = res.data;
+                  })
+                  .catch((error) => {
+                    this.$dialog.alert("목록을 가져오는 중 실패하였습니다." + error);
+                  })
+                  .finally(()=>{
+                    
+                  });
     }
   },
   mounted (){
-
+    this.getMyRegi();
   },
   components:{
   }
