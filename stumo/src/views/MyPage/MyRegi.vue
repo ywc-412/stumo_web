@@ -18,7 +18,7 @@
                 </v-card-text>
                 <div class="pl-9 pt-1 pb-8">
                   <v-row class="pt-2">
-                    <v-chip color="accent">작성중, 모집중, 모집종료</v-chip>
+                    <v-chip color="accent">{{meeting.sttNm}}</v-chip>
                   </v-row>
                 </div>
               </v-card>
