@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import ToastViewer from '../components/toast/ToastViewer.vue';
+import ToastViewer from '../../components/toast/ToastViewer.vue';
 
 /* eslint-disable */ 
 export default {

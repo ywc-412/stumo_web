@@ -61,14 +61,14 @@ const routes = [
         component: () => import("@/views/MyAppl.vue"),
     },
     {
-        path: '/applList',
+        path: '/applList/:meetingNo',
         name: 'ApplList',
-        component: () => import("@/views/ApplList.vue"),
+        component: () => import("@/views/Appl/ApplList.vue"),
     },
     {
         path: '/applConfirm',
         name: 'ApplConfirm',
-        component: () => import("@/views/ApplConfirm.vue"),
+        component: () => import("@/views/Appl/ApplConfirm.vue"),
     },
 ]
 

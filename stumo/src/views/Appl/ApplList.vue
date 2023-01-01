@@ -62,11 +62,26 @@
 
 <script>
 export default {
-
   name: "Home",
   components: {
   },
   mounted (){
+    this.getApplyList(this.$route.params.meetingNo);
+  },
+  methods:{
+    getApplyList(meetingNo){
+      this.$axios.get("/apply/" + meetingNo)
+                  .then((res) => {
+                    alert(res);
+                    // this.chatList = res.data;
+                  })
+                  .catch((error) => {
+                    this.$dialog.alert("목록을 가져오는 중 실패하였습니다." + error);
+                  })
+                  .finally(()=>{
+                    
+                  });
+    }
   },
   data(){
     return{
