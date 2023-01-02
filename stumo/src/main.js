@@ -7,11 +7,13 @@ import Notifications from 'vue-notification'
 import vueMoment from 'vue-moment'
 import store from './store'
 import alert from './assets/js/alert'
+import utils from './assets/js/utils'
 import VueCookies from 'vue-cookies'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.$dialog = alert
+Vue.prototype.$utils = utils
 //Vue.prototype.dialog = VuetifyDialog;
 
 Vue.use(Notifications);

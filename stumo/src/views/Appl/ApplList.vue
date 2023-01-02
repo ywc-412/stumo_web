@@ -66,17 +66,15 @@ export default {
   components: {
   },
   mounted (){
-    this.getApplyList(this.$route.params.meetingNo);
+    if (!this.$utils.isNull(this.$route.params.meetingNo)){
+      this.getApplyList(this.$route.params.meetingNo);
+    }
   },
   methods:{
     getApplyList(meetingNo){
       this.$axios.get("/apply/" + meetingNo)
                   .then((res) => {
-                    alert(res);
-                    // this.chatList = res.data;
-                  })
-                  .catch((error) => {
-                    this.$dialog.alert("목록을 가져오는 중 실패하였습니다." + error);
+                    this.applyList = res.data;
                   })
                   .finally(()=>{
                     
@@ -85,6 +83,7 @@ export default {
   },
   data(){
     return{
+      applyList : {}
     }
   }
 };

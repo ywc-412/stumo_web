@@ -1,4 +1,5 @@
 import axios from 'axios'
+import alert from './alert'
 import store from '../../store'
 
 axios.defaults.baseURL = "http://localhost:8080/api";
@@ -30,6 +31,7 @@ axios.interceptors.response.use(
         return response;
     },
     (error) => {
+        alert.alert("System Error [관리자에게 문의하세요]" + error);
         store.state.isLoading = false;
         return Promise.reject(error);
     }
