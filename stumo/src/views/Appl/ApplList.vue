@@ -5,7 +5,7 @@
         <div>
 
           <div class="text-h4 font-weight-bold primary--text pt-16">
-            <h4>사이드 프로젝트 하실 분 구해요! ㅎㅎㅎ</h4>
+            <h4>{{applyList[0].meeting.title}}</h4>
           </div>
 
           <!-- 지원된 모집글 -->
