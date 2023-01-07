@@ -29,10 +29,6 @@
                         <div class="text-h6 font-weight-bold primary--text">
                           지원했어요!
                         </div>
-                        <div class="text-body-1 py-4">
-                          Ultrices sagittis orci a scelerisque. Massa placerat
-                          duis ultricies lacus sed turpis
-                        </div>
                       </v-card-text>
 
                       <div class="pl-9 pt-1 pb-8">
