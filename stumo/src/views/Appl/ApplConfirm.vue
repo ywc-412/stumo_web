@@ -49,7 +49,17 @@ export default {
           menu2: false
         }
     },
-    setup() {},
+    methods:{
+      getApply(meetingNo){
+        this.$axios.get("/apply/" + meetingNo)
+                    .then((res) => {
+                      this.applyList = res.data;
+                    })
+                    .finally(()=>{
+                      
+                    });
+      }
+    },
     created() {},
     mounted() {},
     unmonunted() {},

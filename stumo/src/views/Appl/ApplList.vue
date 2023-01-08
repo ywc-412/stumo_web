@@ -17,27 +17,28 @@
               <h5 class="text-h7 font-weight-medium" style="color:red;">* 모집종료 시 합류 확정되지 않은 지원자는 합류여부를 확인할 수 있어요.</h5>
             </div>
             <v-row>
-              <v-col v-for="i in 3" :key="i" cols="12" lg="12" md="12">
+              <v-col v-for="apply in applyList" :key="apply.applyNo" cols="12" lg="12" md="12">
                 <v-hover v-slot:default="{ hover }" close-delay="50" open-delay="50">
                   <div class="card_border">
                     <v-card :color="hover ? 'white' : 'transparent'"
                             :elevation="hover ? 12 : 0"
                             flat
-                            hover
-                            to="/applConfirm">
+                            hover                            
+                            @click="goConfirmPage(apply.applyNo)"
+                            >
                       <v-card-text>
                         <div class="text-h6 font-weight-bold primary--text">
-                          지원했어요!
+                          {{apply.title}}
                         </div>
                       </v-card-text>
 
                       <div class="pl-9 pt-1 pb-8">
                         <v-row class="pt-2">
                           <div class="pr-3">
-                            <v-chip color="accent">미열람</v-chip>
+                            <v-chip color="accent">{{apply.isOpenNm}}</v-chip>
                           </div>
                           <div class="pr-3">
-                            <v-chip color="accent">합류확정, 합류대기</v-chip>
+                            <v-chip color="accent">{{apply.isPassNm}}</v-chip>
                           </div>
                         </v-row>
                       </div>
@@ -75,6 +76,9 @@ export default {
                   .finally(()=>{
                     
                   });
+    },
+    goConfirmPage(applyNo){
+      this.$router.push("/applConfirm/" + applyNo);
     }
   },
   data(){
