@@ -9,8 +9,15 @@ import "@toast-ui/editor/dist/toastui-editor.css";
 import { Viewer } from "@toast-ui/vue-editor";
 
 export default {
+  props: ["content"],
   components: {
     'viewer': Viewer
+  },
+  watch: {
+    content(){
+      this.viewerContent = this.content;
+      this.setContent(this.viewerContent);
+    },
   },
   methods: {
     setContent(content){
@@ -19,10 +26,11 @@ export default {
   },
   data(){
     return{
+      viewerContent: '',
     }
   },
   mounted(){
-    this.setContent("<p>MountViewer Content</p><br/><b>MountViewer Content</b><br/><b>MountViewer Content</b>");
+    this.viewerContent = this.content;
   },
 };
 </script>

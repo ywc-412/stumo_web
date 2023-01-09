@@ -69,7 +69,7 @@ export default {
   },
   methods:{
     getApplyList(meetingNo){
-      this.$axios.get("/apply/" + meetingNo)
+      this.$axios.get("/apply/meeting/" + meetingNo)
                   .then((res) => {
                     this.applyList = res.data;
                   })

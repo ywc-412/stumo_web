@@ -6,13 +6,13 @@
           <v-card-text>
 
             <div class="text-h4 font-weight-bold primary--text pt-4 pb-16">
-                <h4>사이드 프로젝트 하실 분 구해요! ㅎㅎㅎ</h4>
+                <h4>{{apply.meeting.title}}</h4>
             </div>
 
             <div class="pt-4">
               <h2 class="pb-5" style="color:black;">지원 제목</h2>
               <div class="text-h4 font-weight-bold primary--text pt-4 ">
-                  <h5>사이드 프로젝트 지원해요!</h5>
+                  <h5>{{apply.title}}</h5>
               </div>
             </div>
             
@@ -20,12 +20,11 @@
             <v-divider class="my-4"></v-divider>
             <div class="pt-4 pb-4">
               <h2 class="text-h7 font-weight-medium pb-7" style="color:black;">지원 글</h2>
-              <toast-viewer class="toast_index"/>
+              <toast-viewer class="toast_index" v-bind:content="apply.content"/>
             </div>
 
           </v-card-text>
-
-          <v-btn color="accent" block large>합류 확정!</v-btn>
+          <v-btn v-if="!this.$utils.isNull(apply.applyNo)" color="accent" block large>합류 확정!</v-btn>
         </v-card>
       </v-col>
     </v-row>
@@ -42,27 +41,44 @@ export default {
                 },
     data() {
         return {
-          date: new Date().toISOString().substr(0, 10),
-          s_date: new Date().toISOString().substr(0, 10),
-          e_date: new Date().toISOString().substr(0, 10),
-          menu1: false,
-          menu2: false
+          apply: {
+            title: '',
+            content: '',
+            meeting: {
+              title: ''
+            }
+          }
         }
     },
-    methods:{
-      getApply(meetingNo){
-        this.$axios.get("/apply/" + meetingNo)
-                    .then((res) => {
-                      this.applyList = res.data;
-                    })
-                    .finally(()=>{
-                      
-                    });
+    mounted() {
+      if (!this.$utils.isNull(this.$route.params.applyNo)){
+        this.getApply(this.$route.params.applyNo);
       }
     },
     created() {},
-    mounted() {},
     unmonunted() {},
+    methods:{
+      getApply(applyNo){
+        this.$axios.get("/apply/" + applyNo)
+                    .then((res) => {
+                      this.apply = res.data;
+                    })
+                    .finally(()=>{
+                      if (this.apply.isOpen === false){
+                        this.updateIsOpen(applyNo);
+                      }
+                    });
+      },
+      updateIsOpen(applyNo){
+        this.$axios.post("/apply/isopen/", {applyNo:applyNo})
+                    .then((res) => {
+                      alert(res.data);
+                    })
+                    .finally(()=>{
+
+                    });
+      }
+    },
 }
 </script>
 
