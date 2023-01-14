@@ -24,7 +24,7 @@
             </div>
 
           </v-card-text>
-          <v-btn v-if="!this.$utils.isNull(apply.applyNo)" color="accent" block large>합류 확정!</v-btn>
+          <v-btn v-if="!this.$utils.isNull(apply.applyNo)" color="accent" block large @click="passApply(apply.applyNo)">합류 확정!</v-btn>
         </v-card>
       </v-col>
     </v-row>
@@ -77,7 +77,14 @@ export default {
                     .finally(()=>{
 
                     });
-      }
+      },
+      passApply(applyNo){
+        this.$dialog.confirm("합류를 확정하시겠습니까?", (rtn) => {
+          if (rtn === true){
+            
+          }
+        })
+      },
     },
 }
 </script>
