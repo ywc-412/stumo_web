@@ -24,7 +24,15 @@
             </div>
 
           </v-card-text>
-          <v-btn v-if="!this.$utils.isNull(apply.applyNo)" color="accent" block large @click="passApply(apply.applyNo)">합류 확정!</v-btn>
+          <v-btn v-if="!this.$utils.isNull(apply.applyNo) && this.apply.isPass === false" color="accent" 
+                block large 
+                @click="passApply(apply.applyNo)">
+            합류 확정!
+          </v-btn>
+          <v-btn v-if="!this.$utils.isNull(apply.applyNo) && this.apply.isPass === true" color="accent" 
+                block large disabled>
+            이미 확정된 지원자입니다!
+          </v-btn>
         </v-card>
       </v-col>
     </v-row>
@@ -62,6 +70,7 @@ export default {
         this.$axios.get("/apply/" + applyNo)
                     .then((res) => {
                       this.apply = res.data;
+                      console.log(this.apply)
                     })
                     .finally(()=>{
                       if (this.apply.isOpen === false){
@@ -78,10 +87,30 @@ export default {
 
                     });
       },
+      updateIsPass(applyNo){
+        this.$axios.post("/apply/ispass/", {applyNo:applyNo})
+                  .then((res)=>{
+                    if (res.data === true){
+                      this.$dialog.alert("확정되었습니다.", ()=>{
+                        this.$router.push("/applList/" + this.apply.meeting.meetingNo);
+                        return;
+                      })
+                    }
+
+                    if(res.status == 202){
+                      this.$dialog.alert("이미 확정된 지원자입니다.");
+                    }else if (res.status === 204){
+                      this.$dialog.alert("지원자가 없습니다.");
+                    }
+                  })
+                  .finally(()=>{
+
+                  })
+      },
       passApply(applyNo){
         this.$dialog.confirm("합류를 확정하시겠습니까?", (rtn) => {
           if (rtn === true){
-            
+            this.updateIsPass(applyNo);
           }
         })
       },
