@@ -46,12 +46,27 @@ export default {
   name: "Home",
   components: {
   },
-  mounted (){
-  },
   data(){
     return{
+      myApplyList:{} 
     }
-  }
+  },
+  mounted (){
+  },
+  methods:{
+    getMyAppl(){
+      this.$axios.get("/apply/my/1")
+                  .then((res) => {
+                    this.myApplyList = res.data;
+                  })
+                  .catch((error) => {
+                    this.$dialog.alert("목록을 가져오는 중 실패하였습니다." + error);
+                  })
+                  .finally(()=>{
+                    
+                  });
+    }
+  },
 };
 </script>
 

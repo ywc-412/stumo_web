@@ -39,7 +39,7 @@ export default {
     return{
       myMeetingList : {}
     }
-  },    
+  },
   methods:{
     getMyRegi(){
       this.$axios.get("/meeting/my/1")
